@@ -23,6 +23,15 @@ const playButton = document.querySelector(config.selectors.playButton);
 const stopButton = document.querySelector(config.selectors.stopButton);
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const icons = {
+  play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>',
+  pause:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6h3v12H7zM14 6h3v12h-3z" fill="currentColor"/></svg>',
+  stop: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7h10v10H7z" fill="currentColor"/></svg>',
+  replay:
+    '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5a7 7 0 1 1-6.32 4H3l3.5-3.5L10 9H7.7A5 5 0 1 0 12 7" fill="currentColor"/></svg>',
+};
+
 if (prefersReducedMotion) {
   document.body.classList.add("reduced-motion");
 }
@@ -56,13 +65,21 @@ const updateHash = () => {
 
 const updateControls = () => {
   if (stoppedAtEnd) {
-    playButton.textContent = "Replay";
-    playButton.classList.add("button--primary");
+    playButton.innerHTML = icons.replay;
+    playButton.setAttribute("aria-label", "Replay");
+    playButton.classList.add("icon-button--primary");
     return;
   }
 
-  playButton.textContent = autoplayActive ? "Pause" : "Play";
-  playButton.classList.toggle("button--primary", autoplayActive);
+  if (autoplayActive) {
+    playButton.innerHTML = icons.pause;
+    playButton.setAttribute("aria-label", "Pause");
+  } else {
+    playButton.innerHTML = icons.play;
+    playButton.setAttribute("aria-label", "Play");
+  }
+
+  playButton.classList.toggle("icon-button--primary", autoplayActive);
 };
 
 const updatePanelCount = () => {

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ayvasa Practice</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="practice">
+  <header class="site-header">
+    <a class="brand" href="index.html">Ayvasa</a>
+    <nav class="site-nav">
+      <a class="button ghost" href="index.html">Protocol</a>
+    </nav>
+  </header>
+
+  <main class="app-shell">
+    <div class="surface">
+      <div class="segmented" role="tablist" aria-label="Practice sections">
+        <button class="segmented__tab is-active" data-view="practice" role="tab" aria-selected="true">Practice</button>
+        <button class="segmented__tab" data-view="history" role="tab" aria-selected="false">History</button>
+        <button class="segmented__tab" data-view="about" role="tab" aria-selected="false">About</button>
+      </div>
+
+      <section class="view" data-view="practice">
+        <div class="view-block" data-state="idle">
+          <h1>Practice</h1>
+          <p class="muted">No alerts. No interruptions.</p>
+          <button class="button primary" id="startSession">Start Session</button>
+        </div>
+
+        <div class="view-block" data-state="active" hidden>
+          <div class="timer" aria-live="polite">
+            <span class="timer-label">Elapsed</span>
+            <span class="timer-value" id="elapsedTime">0:00</span>
+          </div>
+          <div class="button-row">
+            <button class="button primary" id="endSession">End Session</button>
+            <button class="button ghost" id="cancelSession">Cancel</button>
+          </div>
+
+          <details class="protocol" open>
+            <summary>Protocol reference (phases 0–4)</summary>
+            <div class="protocol-grid">
+              <article>
+                <h3>Phase 0 — Baseline Breath Reset</h3>
+                <p>Awareness rests on the natural breath. No control.</p>
+              </article>
+              <article>
+                <h3>Phase 1 — Micro-Resonance Entry</h3>
+                <p>Include breath and body as a whole. Return gently.</p>
+              </article>
+              <article>
+                <h3>Phase 2 — Coherence Compression</h3>
+                <p>Soft breath. Let pauses be, without managing timing.</p>
+              </article>
+              <article>
+                <h3>Phase 3 — Resonant Sweep</h3>
+                <p>Palate → Sinuses → Brow → Crown → Heart.</p>
+              </article>
+              <article>
+                <h3>Phase 4 — The Threshold Window</h3>
+                <p>Rest in the subtle gap. Open, unforced.</p>
+              </article>
+            </div>
+          </details>
+        </div>
+
+        <div class="view-block" data-state="checkin" hidden>
+          <h2>Post-session check-in</h2>
+          <p class="muted" id="sessionSummary">Session length: 0:00</p>
+
+          <div class="field">
+            <h3>Phases practiced</h3>
+            <div class="chip-row" id="phaseChips">
+              <button class="chip" data-phase="all">All phases</button>
+              <button class="chip" data-phase="0">Phase 0</button>
+              <button class="chip" data-phase="1">Phase 1</button>
+              <button class="chip" data-phase="2">Phase 2</button>
+              <button class="chip" data-phase="3">Phase 3</button>
+              <button class="chip" data-phase="4">Phase 4</button>
+            </div>
+          </div>
+
+          <div class="field">
+            <h3>Experience tags (optional, max 2)</h3>
+            <div class="chip-row" id="tagChips">
+              <button class="chip" data-tag="quiet">quiet</button>
+              <button class="chip" data-tag="neutral">neutral</button>
+              <button class="chip" data-tag="scattered">scattered</button>
+              <button class="chip" data-tag="settled">settled</button>
+              <button class="chip" data-tag="light">light</button>
+              <button class="chip" data-tag="ordinary">ordinary</button>
+              <button class="chip" data-tag="effortful">effortful</button>
+              <button class="chip" data-tag="unclear">unclear</button>
+              <button class="chip" data-tag="spacious">spacious</button>
+              <button class="chip" data-tag="compressed">compressed</button>
+            </div>
+          </div>
+
+          <div class="button-row">
+            <button class="button primary" id="saveSession">Save Session</button>
+            <button class="button ghost" id="backToSession">Back</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" data-view="history" hidden>
+        <h1>History</h1>
+        <div class="filters">
+          <label>
+            Phase
+            <select id="phaseFilter">
+              <option value="">All</option>
+              <option value="0">Phase 0</option>
+              <option value="1">Phase 1</option>
+              <option value="2">Phase 2</option>
+              <option value="3">Phase 3</option>
+              <option value="4">Phase 4</option>
+            </select>
+          </label>
+          <label>
+            Tag
+            <select id="tagFilter">
+              <option value="">All</option>
+              <option value="quiet">quiet</option>
+              <option value="neutral">neutral</option>
+              <option value="scattered">scattered</option>
+              <option value="settled">settled</option>
+              <option value="light">light</option>
+              <option value="ordinary">ordinary</option>
+              <option value="effortful">effortful</option>
+              <option value="unclear">unclear</option>
+              <option value="spacious">spacious</option>
+              <option value="compressed">compressed</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="history-actions">
+          <button class="button ghost" id="exportData">Export JSON</button>
+          <label class="button ghost file-input">
+            Import JSON
+            <input type="file" id="importData" accept="application/json" />
+          </label>
+          <button class="button danger" id="clearAll">Clear All Data</button>
+        </div>
+
+        <div class="history-list" id="historyList"></div>
+      </section>
+
+      <section class="view" data-view="about" hidden>
+        <h1>About</h1>
+        <p class="muted">Local-only practice space for the Coherence Protocol. No accounts. No tracking. Data stays on this device.</p>
+      </section>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

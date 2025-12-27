@@ -26,6 +26,10 @@
   --r-2: 20px;
   --r-3: 28px;
 
+  /* Panel Spacing */
+  --panel-pad-y: clamp(1.75rem, 3vw, 2.5rem);
+  --panel-pad-x: clamp(1.25rem, 2.5vw, 2.22rem);
+
   /* Shadow scale */
   --shadow-1: 0 10px 30px rgba(43, 49, 66, 0.1);
   --shadow-2: 0 18px 50px rgba(43, 49, 66, 0.12);
@@ -156,7 +160,7 @@ input[type="file"]:focus-visible {
 .panel {
   max-width: 760px;
   width: 100%;
-  padding: clamp(1.75rem, 3vw, 2.5rem) clamp(1.25rem, 2.5vw, 2.2rem);
+  padding: var(--panel-pad-y) var(--panel-pad-x);
   border-radius: var(--r-3);
   background: var(--surface);
   border: 1px solid var(--border);
@@ -166,6 +170,9 @@ input[type="file"]:focus-visible {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  overflow: hidden;
+  transform: translateZ(0);
+  /* Fix border-radius clipping */
 }
 
 .panel-inner {
@@ -266,6 +273,15 @@ input[type="file"]:focus-visible {
   font-size: 0.7rem;
   color: var(--muted);
   margin-bottom: var(--s-3);
+}
+
+.panel-bleed-image {
+  width: calc(100% + var(--panel-pad-x) * 2);
+  margin-left: calc(var(--panel-pad-x) * -1);
+  margin-right: calc(var(--panel-pad-x) * -1);
+  margin-bottom: calc(var(--panel-pad-y) * -1);
+  display: block;
+  max-width: none;
 }
 
 .panel-count {

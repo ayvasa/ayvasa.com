@@ -3,10 +3,11 @@ const CACHE_NAME = "ayvasa-v1";
 const ASSETS = [
   "/",
   "/index.html",
+  "/practice.html",
   "/styles.css",
   "/app.js",
-  "/practice.html",
   "/manifest.webmanifest",
+  "/icons/icon.svg"
 ];
 
 self.addEventListener("install", (event) => {

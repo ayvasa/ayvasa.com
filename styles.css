@@ -57,6 +57,57 @@ body {
   min-height: 100vh;
 }
 
+body.splash-active .protocol-stage {
+  pointer-events: none;
+}
+
+.splash-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top left, var(--bg1), transparent 60%),
+    radial-gradient(circle at bottom right, #d5e6ff, transparent 55%),
+    var(--bg0);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.splash-overlay.is-visible {
+  opacity: 1;
+}
+
+.splash-content {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+}
+
+.splash-title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--heading);
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+.splash-by {
+  font-size: 0.9rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: lowercase;
+}
+
+.splash-brand {
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brand);
+  font-size: clamp(1.4rem, 3vw, 2rem);
+}
+
 h1,
 h2,
 h3 {
@@ -418,7 +469,8 @@ input[type="file"]:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   .protocol-node,
-  .overlay-card {
+  .overlay-card,
+  .splash-overlay {
     transition: none;
   }
 }

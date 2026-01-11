@@ -9,6 +9,29 @@
 
   const setupHome = () => {
     const map = document.getElementById("protocolMap");
+    const splashOverlay = document.getElementById("splashOverlay");
+    if (splashOverlay) {
+      document.body.classList.add("splash-active");
+      if (prefersReducedMotion) {
+        splashOverlay.classList.add("is-visible");
+      } else {
+        requestAnimationFrame(() => splashOverlay.classList.add("is-visible"));
+      }
+      const splashDurationMs = 2300;
+      window.setTimeout(() => {
+        splashOverlay.classList.remove("is-visible");
+        const finalize = () => {
+          splashOverlay.hidden = true;
+          document.body.classList.remove("splash-active");
+          splashOverlay.removeEventListener("transitionend", finalize);
+        };
+        if (prefersReducedMotion) {
+          finalize();
+        } else {
+          splashOverlay.addEventListener("transitionend", finalize);
+        }
+      }, splashDurationMs);
+    }
     if (!map) return;
 
     const phaseOverlay = document.getElementById("phaseOverlay");

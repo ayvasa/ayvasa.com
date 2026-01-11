@@ -320,9 +320,87 @@
       banner.hidden = true;
     });
 
+        // -----------------------------
+    // PWA Install Promotion (Home only)
+    // -----------------------------
+    const setupInstallPromo = () => {
+      const promo = document.getElementById("installPromo");
+      const primaryBtn = document.getElementById("installPromoPrimary");
+      const dismissBtn = document.getElementById("installPromoDismiss");
+
+      if (!promo || !primaryBtn || !dismissBtn) return;
+
+      const DISMISSED_KEY = "pwaInstallDismissed";
+
+      const isStandalone =
+        window.matchMedia("(display-mode: standalone)").matches ||
+        window.navigator.standalone === true;
+
+      if (isStandalone || localStorage.getItem(DISMISSED_KEY) === "1") {
+        promo.hidden = true;
+        return;
+      }
+
+      const isIOS = () => {
+        const ua = navigator.userAgent || "";
+        const touch = "ontouchend" in document;
+        return /iPad|iPhone|iPod/.test(ua) || (ua.includes("Mac") && touch);
+      };
+
+      let deferredPrompt = null;
+
+      const show = () => (promo.hidden = false);
+      const hide = (persist = false) => {
+        promo.hidden = true;
+        if (persist) localStorage.setItem(DISMISSED_KEY, "1");
+      };
+
+      const showHelp = () => {
+        alert(
+          "To install:\n\n" +
+          "1. Open the Share menu\n" +
+          "2. Tap 'Add to Home Screen'\n" +
+          "3. Confirm Add"
+        );
+      };
+
+      if (isIOS()) {
+        primaryBtn.textContent = "Add to Home Screen";
+        primaryBtn.onclick = showHelp;
+        show();
+      } else {
+        primaryBtn.textContent = "Install app";
+        primaryBtn.onclick = () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choice) => {
+              if (choice.outcome === "accepted") {
+                hide(true);
+              }
+              deferredPrompt = null;
+            });
+          } else {
+            showHelp();
+          }
+        };
+        show();
+      }
+
+      window.addEventListener("beforeinstallprompt", (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        primaryBtn.textContent = "Install app";
+        show();
+      });
+
+      window.addEventListener("appinstalled", () => hide(true));
+      dismissBtn.addEventListener("click", () => hide(true));
+    };
+    
     const dismissed = getFlag("protocolOnboardingDismissed");
     const completed = getFlag("protocolOnboardingCompleted");
     banner.hidden = dismissed || completed;
+    setupInstallPromo();
   };
 
   const setupPractice = () => {

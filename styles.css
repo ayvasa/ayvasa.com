@@ -736,6 +736,9 @@ input[type="file"]:focus-visible {
 .app-shell {
   padding: 7rem 1.5rem 3rem;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
   justify-content: center;
 }
 
@@ -747,6 +750,10 @@ input[type="file"]:focus-visible {
   box-shadow: var(--shadow-2);
   padding: var(--s-7);
   backdrop-filter: blur(12px);
+}
+
+#installPromo {
+  width: min(860px, 100%);
 }
 
 .segmented {

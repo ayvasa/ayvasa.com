@@ -330,7 +330,7 @@
           "Rest attention in the subtle gap behind the palate (quieter space behind the contact point).",
           "Allow whatever arises without reaction.",
           "Don’t try to maintain stillness; don’t check if it’s working.",
-          "Keep it brief: ~2 minutes if newer; up to ~6 if appropriate.",
+          "Keep it brief: 2 minutes if newer; up to 6 minutes if appropriate.",
         ],
         grounding: [
           "Return to a few soft exhales, optionally with gentle humming, for 10–15 cycles (~3 minutes).",

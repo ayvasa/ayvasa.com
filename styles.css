@@ -378,8 +378,8 @@ input[type="file"]:focus-visible,
   min-height: 100vh;
   padding: 7rem 1.5rem 5rem;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
 }
 
 .protocol-view {
@@ -387,6 +387,7 @@ input[type="file"]:focus-visible,
   display: flex;
   flex-direction: column;
   gap: var(--s-5);
+  margin-bottom: var(--s-9);
 }
 
 .protocol-header {
@@ -643,6 +644,7 @@ input[type="file"]:focus-visible,
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .protocol-node,
   .overlay-card,
   .splash-overlay {
@@ -1109,10 +1111,12 @@ input[type="file"]:focus-visible,
     transform: scale(1);
     box-shadow: 0 20px 40px rgba(80, 103, 214, 0.25);
   }
+
   50% {
     transform: scale(1.03);
     box-shadow: 0 26px 60px rgba(80, 103, 214, 0.3);
   }
+
   100% {
     transform: scale(1);
     box-shadow: 0 20px 40px rgba(80, 103, 214, 0.25);
@@ -1448,12 +1452,50 @@ select {
   background: rgba(60, 70, 90, 0.06);
 }
 
-.sessions-heatmap__swatch.level-1 { background: rgba(80, 103, 214, 0.3); }
-.sessions-heatmap__swatch.level-2 { background: rgba(80, 103, 214, 0.5); }
-.sessions-heatmap__swatch.level-3 { background: rgba(80, 103, 214, 0.75); }
-.sessions-heatmap__swatch.level-4 { background: var(--accent); }
+.sessions-heatmap__swatch.level-1 {
+  background: rgba(80, 103, 214, 0.3);
+}
+
+.sessions-heatmap__swatch.level-2 {
+  background: rgba(80, 103, 214, 0.5);
+}
+
+.sessions-heatmap__swatch.level-3 {
+  background: rgba(80, 103, 214, 0.75);
+}
+
+.sessions-heatmap__swatch.level-4 {
+  background: var(--accent);
+}
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.about-ayvasa {
+  max-width: var(--content);
+  margin: 0 auto;
+  text-align: center;
+  color: var(--muted);
+}
+
+.about-ayvasa h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--heading);
+  margin-bottom: var(--s-3);
+}
+
+.about-ayvasa p {
+  font-size: 0.95rem;
+  color: var(--muted);
+  line-height: var(--lh);
 }

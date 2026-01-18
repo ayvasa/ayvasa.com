@@ -724,7 +724,7 @@
     const saved = window.localStorage.getItem("ayvasa_heatmap_range_days");
     if (saved) {
       const d = Number(saved);
-      if ([30, 84, 365].includes(d)) {
+      if ([30, 84, 180].includes(d)) {
         currentRangeDays = d;
         rangeButtons.forEach(b => {
           b.classList.toggle("is-active", Number(b.dataset.heatmapRange) === d);

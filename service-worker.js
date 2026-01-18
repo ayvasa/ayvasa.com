@@ -1,11 +1,11 @@
-const CACHE_NAME = "ayvasa-cache-v2";
+const CACHE_NAME = "ayvasa-cache-v3";
 
 const ASSETS = [
   "/",
   "/index.html",
   "/practice.html",
-  "/styles.css?v=20260113",
-  "/app.js?v=20260113",
+  "/styles.css?v=20260118",
+  "/app.js?v=20260118",
   "/manifest.webmanifest",
   "/icons/icon.svg"
 ];

@@ -504,6 +504,237 @@
     banner.hidden = dismissed || completed;
   };
 
+  // --- IndexedDB & Shared Helpers ---
+
+  const dbState = {
+    db: null,
+  };
+
+  const openDatabase = () => {
+    return new Promise((resolve, reject) => {
+      if (dbState.db) {
+        resolve(dbState.db);
+        return;
+      }
+      const request = indexedDB.open("ayvasa_coherence", 1);
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        if (!db.objectStoreNames.contains("sessions")) {
+          const store = db.createObjectStore("sessions", { keyPath: "id", autoIncrement: true });
+          store.createIndex("endedAt", "endedAt", { unique: false });
+          store.createIndex("phases", "phases", { unique: false, multiEntry: true });
+          store.createIndex("tags", "tags", { unique: false, multiEntry: true });
+        }
+      };
+      request.onsuccess = () => {
+        dbState.db = request.result;
+        resolve(request.result);
+      };
+      request.onerror = () => {
+        console.error("IndexedDB open failed:", request.error);
+        reject(request.error);
+      };
+    });
+  };
+
+  const getStore = (mode = "readonly") => {
+    const tx = dbState.db.transaction("sessions", mode);
+    return tx.objectStore("sessions");
+  };
+
+  const addSession = (session) => {
+    return new Promise((resolve, reject) => {
+      const store = getStore("readwrite");
+      const request = store.add(session);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => {
+        console.error("IndexedDB add failed:", request.error);
+        reject(request.error);
+      };
+    });
+  };
+
+  const updateSession = (session) => {
+    return new Promise((resolve, reject) => {
+      const store = getStore("readwrite");
+      const request = store.put(session);
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => {
+        console.error("IndexedDB update failed:", request.error);
+        reject(request.error);
+      };
+    });
+  };
+
+  const deleteSession = (id) => {
+    return new Promise((resolve, reject) => {
+      const store = getStore("readwrite");
+      const request = store.delete(id);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  };
+
+  const clearSessions = () => {
+    return new Promise((resolve, reject) => {
+      const store = getStore("readwrite");
+      const request = store.clear();
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  };
+
+  const getAllSessions = () => {
+    return new Promise((resolve, reject) => {
+      const store = getStore();
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
+  };
+
+  // --- Sessions Heatmap Logic ---
+
+  const setupSessionsGraph = (ensureDbFn) => {
+    const container = document.querySelector(".sessions-graph");
+    const heatmapEl = document.getElementById("sessionsHeatmap");
+    const hints = document.querySelector(".sessions-graph__header");
+
+    if (!container || !heatmapEl) return null;
+
+    const rangeButtons = document.querySelectorAll("[data-heatmap-range]");
+    let currentRangeDays = 30; // default
+
+    const renderHeatmap = (sessions, rangeDays) => {
+      heatmapEl.innerHTML = "";
+
+      // Build map: YYYY-MM-DD -> count
+      const counts = new Map();
+      sessions.forEach(s => {
+        if (!s.endedAt) return;
+        const key = s.endedAt.split("T")[0];
+        counts.set(key, (counts.get(key) || 0) + 1);
+      });
+
+      // Calculate date range
+      // End date = Today
+      // Start date = Today - (rangeDays - 1)
+      // Pad start date backwards to Sunday (or Monday) to square off the grid?
+      // Actually, GitHub style usually fills columns left-to-right.
+      // We'll prioritize filling N cols ending today.
+
+      const today = new Date();
+      // Reset time to end of day or just use date arithmetic carefully
+      today.setHours(0, 0, 0, 0); // We only care about date key
+
+      // Generate dates
+      const dates = [];
+      for (let i = 0; i < rangeDays; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() - i);
+        dates.push(d);
+      }
+      dates.reverse(); // Oldest first
+
+      // Calculate columns needed (rows fixed at 7)
+      // We want strict 7-row grid (Sun-Sat).
+      // Align the first date to its weekday.
+
+      // 1. Determine start date
+      // 2. Pad previous days with null placeholders to align to Sunday (0)
+
+      const startDate = dates[0];
+      const startDay = startDate.getDay(); // 0=Sun
+
+      const gridCells = [];
+
+      // Pad start
+      for (let i = 0; i < startDay; i++) {
+        gridCells.push(null);
+      }
+
+      // Add actual dates
+      dates.forEach(d => gridCells.push(d));
+
+      // Pad end if desired, or just let css grid auto-flow
+
+      // Render
+      gridCells.forEach(dateObj => {
+        const cell = document.createElement("div");
+        cell.className = "sessions-heatmap__cell";
+
+        if (!dateObj) {
+          cell.classList.add("is-empty");
+          cell.style.background = "transparent";
+        } else {
+          const year = dateObj.getFullYear();
+          const month = String(dateObj.getMonth() + 1).padStart(2, "0");
+          const day = String(dateObj.getDate()).padStart(2, "0");
+          const key = `${year}-${month}-${day}`;
+
+          const count = counts.get(key) || 0;
+          const level = Math.min(count, 4);
+          cell.classList.add(`level-${level}`);
+
+          // Tooltip
+          const userDate = dateObj.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+          const label = count === 1 ? "1 session" : `${count} sessions`;
+          cell.title = `${userDate} — ${label}`;
+        }
+        heatmapEl.appendChild(cell);
+      });
+
+      // Update number of columns dynamically if using CSS Grid
+      // But we set grid-auto-flow: column; grid-template-rows: repeat(7, 1fr)
+      // This naturally flows top-down, left-right.
+      // So standard array order (oldest -> newest) fills col 1 (S,M,T,W,T,F,S), then col 2...
+      // This is exactly what we want.
+    };
+
+    const refresh = async () => {
+      if (ensureDbFn) await ensureDbFn();
+      const sessions = await getAllSessions();
+      if (!sessions || sessions.length === 0) {
+        container.hidden = true;
+        return;
+      }
+      container.hidden = false;
+      renderHeatmap(sessions, currentRangeDays);
+    };
+
+    // Events
+    rangeButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        const days = Number(btn.dataset.heatmapRange);
+        if (!days) return;
+        currentRangeDays = days;
+
+        // Toggle active class
+        rangeButtons.forEach(b => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+
+        // Persist
+        window.localStorage.setItem("ayvasa_heatmap_range_days", String(days));
+
+        refresh();
+      });
+    });
+
+    // Init pref
+    const saved = window.localStorage.getItem("ayvasa_heatmap_range_days");
+    if (saved) {
+      const d = Number(saved);
+      if ([30, 84, 365].includes(d)) {
+        currentRangeDays = d;
+        rangeButtons.forEach(b => {
+          b.classList.toggle("is-active", Number(b.dataset.heatmapRange) === d);
+        });
+      }
+    }
+
+    return { refresh };
+  };
+
   const setupPractice = () => {
     const viewButtons = document.querySelectorAll(".segmented__tab");
     const views = document.querySelectorAll(".view");
@@ -544,6 +775,19 @@
     let isActiveSession = false;
     let dbReady = false;
     let dbInitPromise = null;
+
+    const ensureDb = async () => {
+      if (dbReady) return;
+      if (!dbInitPromise) {
+        dbInitPromise = openDatabase().then(() => {
+          dbReady = true;
+          saveBtn.disabled = false;
+          exportBtn.disabled = false;
+          clearAllBtn.disabled = false;
+        });
+      }
+      return dbInitPromise;
+    };
     let entryState = null;
     let interferenceLevel = null;
     let phase4Estimate = null;
@@ -555,86 +799,6 @@
 
     const contextFields = ["sleepQuality", "stressLevel", "dayType", "lifeSmoother", "harderThanUsual"];
 
-    const dbState = {
-      db: null,
-    };
-
-    const openDatabase = () => {
-      return new Promise((resolve, reject) => {
-        const request = indexedDB.open("ayvasa_coherence", 1);
-        request.onupgradeneeded = (event) => {
-          const db = event.target.result;
-          const store = db.createObjectStore("sessions", { keyPath: "id", autoIncrement: true });
-          store.createIndex("endedAt", "endedAt", { unique: false });
-          store.createIndex("phases", "phases", { unique: false, multiEntry: true });
-          store.createIndex("tags", "tags", { unique: false, multiEntry: true });
-        };
-        request.onsuccess = () => {
-          dbState.db = request.result;
-          resolve(request.result);
-        };
-        request.onerror = () => {
-          console.error("IndexedDB open failed:", request.error);
-          reject(request.error);
-        };
-      });
-    };
-
-    const getStore = (mode = "readonly") => {
-      const tx = dbState.db.transaction("sessions", mode);
-      return tx.objectStore("sessions");
-    };
-
-    const addSession = (session) => {
-      return new Promise((resolve, reject) => {
-        const store = getStore("readwrite");
-        const request = store.add(session);
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => {
-          console.error("IndexedDB add failed:", request.error);
-          reject(request.error);
-        };
-      });
-    };
-
-    const updateSession = (session) => {
-      return new Promise((resolve, reject) => {
-        const store = getStore("readwrite");
-        const request = store.put(session);
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => {
-          console.error("IndexedDB update failed:", request.error);
-          reject(request.error);
-        };
-      });
-    };
-
-    const deleteSession = (id) => {
-      return new Promise((resolve, reject) => {
-        const store = getStore("readwrite");
-        const request = store.delete(id);
-        request.onsuccess = () => resolve();
-        request.onerror = () => reject(request.error);
-      });
-    };
-
-    const clearSessions = () => {
-      return new Promise((resolve, reject) => {
-        const store = getStore("readwrite");
-        const request = store.clear();
-        request.onsuccess = () => resolve();
-        request.onerror = () => reject(request.error);
-      });
-    };
-
-    const getAllSessions = () => {
-      return new Promise((resolve, reject) => {
-        const store = getStore();
-        const request = store.getAll();
-        request.onsuccess = () => resolve(request.result || []);
-        request.onerror = () => reject(request.error);
-      });
-    };
 
     const renderState = (state) => {
       practiceScreens.forEach((block) => {
@@ -926,6 +1090,12 @@
           : "";
         items.push(`Carryover: ${session.carryover}${delay}`);
       }
+      if (session.actionFeel) {
+        const delay = Number.isFinite(session.actionFeelDelayMin)
+          ? ` (${session.actionFeelDelayMin} min)`
+          : "";
+        items.push(`Action: ${session.actionFeel}${delay}`);
+      }
       if (session.sleepQuality) {
         items.push(`Sleep: ${session.sleepQuality}`);
       }
@@ -952,11 +1122,26 @@
       return items;
     };
 
-    const updateCarryoverSelection = (form, value) => {
+    const updateCarryoverSelection = (form, value, actionFeelValue) => {
       if (!form) return;
       form.dataset.carryoverValue = value || "";
-      form.querySelectorAll(".chip").forEach((chip) => {
+      form.querySelectorAll(".chip[data-carryover]").forEach((chip) => {
         chip.classList.toggle("is-selected", value && chip.dataset.carryover === value);
+      });
+
+      if (actionFeelValue !== undefined) {
+        form.dataset.actionFeelValue = actionFeelValue || "";
+        form.querySelectorAll(".chip[data-action-feel]").forEach((chip) => {
+          chip.classList.toggle("is-selected", actionFeelValue && chip.dataset.actionFeel === actionFeelValue);
+        });
+      }
+    };
+
+    const updateActionFeelSelection = (form, value) => {
+      if (!form) return;
+      form.dataset.actionFeelValue = value || "";
+      form.querySelectorAll(".chip[data-action-feel]").forEach((chip) => {
+        chip.classList.toggle("is-selected", value && chip.dataset.actionFeel === value);
       });
     };
 
@@ -1094,12 +1279,21 @@
           </div>
           <div class="carryover-form" data-carryover-form="${session.id}" hidden>
             <div class="field">
+              <span class="muted" style="font-size:0.85rem; display:block; margin-bottom:0.5rem;">Carryover quality</span>
               <div class="chip-row">
                 <button class="chip" data-carryover="unchanged">unchanged</button>
                 <button class="chip" data-carryover="clearer">clearer</button>
                 <button class="chip" data-carryover="steadier">steadier</button>
                 <button class="chip" data-carryover="heavier">heavier</button>
                 <button class="chip" data-carryover="slightly disorganized">slightly disorganized</button>
+              </div>
+            </div>
+            <div class="field">
+              <span class="muted" style="font-size:0.85rem; display:block; margin-bottom:0.5rem;">Action felt</span>
+              <div class="chip-row">
+                <button class="chip" data-action-feel="more natural">more natural</button>
+                <button class="chip" data-action-feel="neutral">neutral</button>
+                <button class="chip" data-action-feel="more effortful">more effortful</button>
               </div>
             </div>
             <div class="history-card__actions">
@@ -1354,6 +1548,7 @@
         if (window.confirm("Delete this session?")) {
           await deleteSession(id);
           await renderHistory();
+          if (heatmapGraph) heatmapGraph.refresh();
         }
         return;
       }
@@ -1365,7 +1560,7 @@
         const session = sessionCache.get(id);
         if (!form || !session) return;
         if (form.hidden) {
-          updateCarryoverSelection(form, session.carryover || null);
+          updateCarryoverSelection(form, session.carryover || null, session.actionFeel || null);
           form.hidden = false;
         } else {
           form.hidden = true;
@@ -1380,6 +1575,15 @@
         const value = carryoverChip.dataset.carryover;
         const nextValue = form.dataset.carryoverValue === value ? null : value;
         updateCarryoverSelection(form, nextValue);
+      }
+
+      const actionFeelChip = event.target.closest("button[data-action-feel]");
+      if (actionFeelChip) {
+        const form = actionFeelChip.closest("[data-carryover-form]");
+        if (!form) return;
+        const value = actionFeelChip.dataset.actionFeel;
+        const nextValue = form.dataset.actionFeelValue === value ? null : value;
+        updateActionFeelSelection(form, nextValue);
         return;
       }
 
@@ -1398,11 +1602,15 @@
         const delayMin = Number.isFinite(endedAtMs)
           ? Math.max(0, Math.round((Date.now() - endedAtMs) / 60000))
           : 0;
+        const actionFeel = form.dataset.actionFeelValue || null;
+
         await ensureDb();
         await updateSession({
           ...session,
           carryover: value,
           carryoverDelayMin: delayMin,
+          actionFeel: actionFeel,
+          actionFeelDelayMin: actionFeel ? delayMin : null,
         });
         await renderHistory();
         return;
@@ -1506,6 +1714,7 @@
       const file = event.target.files[0];
       if (!file) return;
       await importData(file);
+      if (heatmapGraph) heatmapGraph.refresh();
       event.target.value = "";
     });
 
@@ -1513,7 +1722,9 @@
       await ensureDb();
       if (window.confirm("Clear all session data?")) {
         await clearSessions();
+        await clearSessions();
         await renderHistory();
+        if (heatmapGraph) heatmapGraph.refresh();
       }
     });
 
@@ -1521,23 +1732,16 @@
     exportBtn.disabled = true;
     clearAllBtn.disabled = true;
 
-    const ensureDb = async () => {
-      if (dbReady) return;
-      if (!dbInitPromise) {
-        dbInitPromise = openDatabase().then(() => {
-          dbReady = true;
-          saveBtn.disabled = false;
-          exportBtn.disabled = false;
-          clearAllBtn.disabled = false;
-        });
-      }
-      return dbInitPromise;
-    };
+    // Heatmap setup
+    const heatmapGraph = setupSessionsGraph(ensureDb);
 
     updateTagsButtonState();
 
     ensureDb()
-      .then(renderHistory)
+      .then(async () => {
+        await renderHistory();
+        if (heatmapGraph) heatmapGraph.refresh();
+      })
       .catch((error) => {
         console.error("IndexedDB init failed:", error);
       });

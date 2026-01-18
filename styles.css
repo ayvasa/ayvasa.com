@@ -1338,3 +1338,122 @@ select {
     animation: none !important;
   }
 }
+
+/* Sessions Graph */
+.sessions-graph {
+  margin-top: var(--s-5);
+  margin-bottom: var(--s-5);
+  animation: fadeIn 0.4s ease;
+}
+
+.sessions-graph__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--s-4);
+  margin-bottom: var(--s-3);
+  flex-wrap: wrap;
+}
+
+.sessions-graph__header h2 {
+  font-size: 1.1rem;
+  margin: 0;
+  color: var(--heading);
+}
+
+.sessions-graph__hint {
+  font-size: 0.85rem;
+  margin: var(--s-2) 0 0;
+}
+
+.sessions-graph__range {
+  display: flex;
+  gap: var(--s-2);
+}
+
+.sessions-graph__range .button {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8rem;
+  height: auto;
+  min-height: 28px;
+}
+
+.sessions-graph__range .button.is-active {
+  background: var(--surface);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+.sessions-graph__scroller {
+  overflow-x: auto;
+  padding-bottom: var(--s-2);
+  margin: 0 -1rem;
+  padding: 0 1rem var(--s-2);
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sessions-graph__scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.sessions-heatmap {
+  display: grid;
+  grid-template-rows: repeat(7, 1fr);
+  grid-auto-flow: column;
+  gap: 3px;
+  width: max-content;
+}
+
+.sessions-heatmap__cell {
+  width: 10px;
+  height: 10px;
+  background: rgba(60, 70, 90, 0.06);
+  border-radius: 2px;
+  transition: background 0.2s ease;
+}
+
+.sessions-heatmap__cell.level-1 {
+  background: rgba(80, 103, 214, 0.3);
+}
+
+.sessions-heatmap__cell.level-2 {
+  background: rgba(80, 103, 214, 0.5);
+}
+
+.sessions-heatmap__cell.level-3 {
+  background: rgba(80, 103, 214, 0.75);
+}
+
+.sessions-heatmap__cell.level-4 {
+  background: var(--accent);
+}
+
+.sessions-graph__legend {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  justify-content: flex-end;
+  margin-top: var(--s-1);
+}
+
+.sessions-heatmap__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  background: rgba(60, 70, 90, 0.06);
+}
+
+.sessions-heatmap__swatch.level-1 { background: rgba(80, 103, 214, 0.3); }
+.sessions-heatmap__swatch.level-2 { background: rgba(80, 103, 214, 0.5); }
+.sessions-heatmap__swatch.level-3 { background: rgba(80, 103, 214, 0.75); }
+.sessions-heatmap__swatch.level-4 { background: var(--accent); }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

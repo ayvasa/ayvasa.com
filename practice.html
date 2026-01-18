@@ -203,6 +203,36 @@
 
       <section class="view" data-view="history" hidden>
         <h2 class="view-title">History</h2>
+        <section class="sessions-graph" aria-labelledby="sessionsGraphTitle" hidden>
+          <div class="sessions-graph__header">
+            <div>
+              <h2 id="sessionsGraphTitle">Sessions Over Time</h2>
+            </div>
+
+            <div class="sessions-graph__range" role="group" aria-label="Sessions graph range">
+              <button class="button ghost is-active" type="button" data-heatmap-range="30">30d</button>
+              <button class="button ghost" type="button" data-heatmap-range="84">12w</button>
+              <button class="button ghost" type="button" data-heatmap-range="365">12m</button>
+            </div>
+          </div>
+
+          <div class="sessions-graph__scroller" aria-label="Sessions heatmap">
+            <div id="sessionsHeatmap" class="sessions-heatmap" role="img" aria-label="Session activity heatmap"></div>
+          </div>
+
+          <p class="muted sessions-graph__hint">Gaps are normal. The nervous system learns in waves.</p>
+
+          <div class="sessions-graph__legend" aria-hidden="true">
+            <span class="muted">Less</span>
+            <span class="sessions-heatmap__swatch level-0"></span>
+            <span class="sessions-heatmap__swatch level-1"></span>
+            <span class="sessions-heatmap__swatch level-2"></span>
+            <span class="sessions-heatmap__swatch level-3"></span>
+            <span class="sessions-heatmap__swatch level-4"></span>
+            <span class="muted">More</span>
+          </div>
+        </section>
+
         <div class="filters">
           <label>
             Phase

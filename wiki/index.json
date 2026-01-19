@@ -54,6 +54,23 @@
       ]
     },
     {
+      "slug": "coherence",
+      "title": "Coherence",
+      "category": "core",
+      "summary": "The degree to which internal processes operate in coordination rather than conflict.",
+      "md": "/wiki/coherence.md",
+      "aliases": [
+        "internal coherence",
+        "functional coherence"
+      ],
+      "related": [
+        "field-coherence",
+        "interference",
+        "original-intelligence",
+        "physiological-settling"
+      ]
+    },
+    {
       "slug": "field-coherence",
       "title": "Field Coherence",
       "category": "core",

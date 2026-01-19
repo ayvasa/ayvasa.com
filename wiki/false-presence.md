@@ -10,22 +10,22 @@ This can create the impression of depth or clarity while masking subtle effort, 
 
 ## How it shows up
 
-* Sustained attention accompanied by tension or effort
-* A controlled or “held” quality in awareness
-* Reduced emotional range or spontaneity
-* Subtle self-monitoring while being “present”
-* Fatigue after periods of mindful attention
+- Sustained attention accompanied by tension or effort
+- A controlled or “held” quality in awareness
+- Reduced emotional range or spontaneity
+- Subtle self-monitoring while being “present”
+- Fatigue after periods of mindful attention
 
 ## What it is not
 
-* Lack of sincerity or commitment
-* A moral or spiritual failing
-* The same as distraction or absence
-* Something that must be forcibly corrected
+- Lack of sincerity or commitment
+- A moral or spiritual failing
+- The same as distraction or absence
+- Something that must be forcibly corrected
 
 ## See also
 
-* [Presence](#/presence)
-* [Field Coherence](#/field-coherence)
-* [Conscious Self](#/conscious-self)
-* [Interference](#/interference)
+- [Presence](#/presence)
+- [Field Coherence](#/field-coherence)
+- [Conscious Self](#/conscious-self)
+- [Interference](#/interference)

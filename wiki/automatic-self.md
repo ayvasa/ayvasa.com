@@ -10,22 +10,22 @@ As coherence increases, the Automatic Self continues to function, but with less 
 
 ## How it shows up
 
-* Habitual thoughts, reactions, and emotional responses
-* Learned preferences, aversions, and coping strategies
-* Predictable behavioral patterns in familiar situations
-* Fast, efficient action without deliberation
-* Stress or reactivity when overloaded or incoherent
+- Habitual thoughts, reactions, and emotional responses
+- Learned preferences, aversions, and coping strategies
+- Predictable behavioral patterns in familiar situations
+- Fast, efficient action without deliberation
+- Stress or reactivity when overloaded or incoherent
 
 ## What it is not
 
-* A flaw or defect to eliminate
-* A false self that must be destroyed
-* Conscious intention or deliberate choice
-* The source of Original Intelligence
+- A flaw or defect to eliminate
+- A false self that must be destroyed
+- Conscious intention or deliberate choice
+- The source of Original Intelligence
 
 ## See also
 
-* [Conscious Self](#/conscious-self)
-* [Original Intelligence](#/original-intelligence)
-* [Field Coherence](#/field-coherence)
-* [Identity Dissolution](#/identity-dissolution)
+- [Conscious Self](#/conscious-self)
+- [Original Intelligence](#/original-intelligence)
+- [Field Coherence](#/field-coherence)
+- [Identity Dissolution](#/identity-dissolution)

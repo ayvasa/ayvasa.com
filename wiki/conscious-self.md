@@ -10,22 +10,22 @@ As coherence increases, the Conscious Self shifts from constant management and c
 
 ## How it shows up
 
-* Intentional focus and deliberate decision-making
-* Self-reflection and evaluation
-* Effortful control or correction of behavior
-* Planning, goal-setting, and problem-solving
-* A sense of “I am choosing” or “I am doing”
+- Intentional focus and deliberate decision-making
+- Self-reflection and evaluation
+- Effortful control or correction of behavior
+- Planning, goal-setting, and problem-solving
+- A sense of “I am choosing” or “I am doing”
 
 ## What it is not
 
-* The true or final self
-* The source of all intelligence or insight
-* Capable of sustaining total control over experience
-* Meant to run the organism continuously
+- The true or final self
+- The source of all intelligence or insight
+- Capable of sustaining total control over experience
+- Meant to run the organism continuously
 
 ## See also
 
-* [Automatic Self](#/automatic-self)
-* [Original Intelligence](#/original-intelligence)
-* [Field Coherence](#/field-coherence)
-* [Unselfconscious Motion](#/unselfconscious-motion)
+- [Automatic Self](#/automatic-self)
+- [Original Intelligence](#/original-intelligence)
+- [Field Coherence](#/field-coherence)
+- [Unselfconscious Motion](#/unselfconscious-motion)

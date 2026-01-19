@@ -10,22 +10,22 @@ The Zero Field is not something to enter or maintain. It appears naturally when 
 
 ## How it shows up
 
-* A sense of internal quiet without dullness
-* Absence of urgency, striving, or internal pressure
-* Neutral clarity rather than emotional intensity
-* Increased sensitivity to subtle signals
-* Ease without effort
+- A sense of internal quiet without dullness
+- Absence of urgency, striving, or internal pressure
+- Neutral clarity rather than emotional intensity
+- Increased sensitivity to subtle signals
+- Ease without effort
 
 ## What it is not
 
-* A void or dissociative state
-* Emotional numbness
-* A transcendent or mystical realm
-* A permanent condition
+- A void or dissociative state
+- Emotional numbness
+- A transcendent or mystical realm
+- A permanent condition
 
 ## See also
 
-* [Original Intelligence](#/original-intelligence)
-* [Field Coherence](#/field-coherence)
-* [Interference](#/interference)
-* [Still Point](#/still-point)
+- [Original Intelligence](#/original-intelligence)
+- [Field Coherence](#/field-coherence)
+- [Interference](#/interference)
+- [Still Point](#/still-point)

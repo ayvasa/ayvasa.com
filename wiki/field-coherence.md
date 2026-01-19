@@ -10,22 +10,22 @@ Field Coherence allows the Automatic Self to function efficiently, the Conscious
 
 ## How it shows up
 
-* Reduced internal noise and contradiction
-* Smoother transitions between thought, feeling, and action
-* Less reactivity under pressure
-* A felt sense of stability or “rightness”
-* Increased capacity to respond rather than react
+- Reduced internal noise and contradiction
+- Smoother transitions between thought, feeling, and action
+- Less reactivity under pressure
+- A felt sense of stability or “rightness”
+- Increased capacity to respond rather than react
 
 ## What it is not
 
-* Constant calm or emotional positivity
-* A trance or altered state
-* Suppression of thoughts or feelings
-* Detachment from practical life
+- Constant calm or emotional positivity
+- A trance or altered state
+- Suppression of thoughts or feelings
+- Detachment from practical life
 
 ## See also
 
-* [Original Intelligence](#/original-intelligence)
-* [Automatic Self](#/automatic-self)
-* [Conscious Self](#/conscious-self)
-* [Unselfconscious Motion](#/unselfconscious-motion)
+- [Original Intelligence](#/original-intelligence)
+- [Automatic Self](#/automatic-self)
+- [Conscious Self](#/conscious-self)
+- [Unselfconscious Motion](#/unselfconscious-motion)

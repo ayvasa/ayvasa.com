@@ -10,22 +10,22 @@ Presence becomes most effective when supported by Field Coherence. Without coher
 
 ## How it shows up
 
-* Attentive listening or observation
-* Awareness of bodily sensation and emotion
-* Reduced distraction or mental drifting
-* A felt sense of “being here”
-* Willingness to stay with experience
+- Attentive listening or observation
+- Awareness of bodily sensation and emotion
+- Reduced distraction or mental drifting
+- A felt sense of “being here”
+- Willingness to stay with experience
 
 ## What it is not
 
-* A permanent state
-* Emotional calm or positivity
-* A guarantee of insight or wisdom
-* The same as coherence or awakening
+- A permanent state
+- Emotional calm or positivity
+- A guarantee of insight or wisdom
+- The same as coherence or awakening
 
 ## See also
 
-* [Field Coherence](#/field-coherence)
-* [Conscious Self](#/conscious-self)
-* [Unselfconscious Motion](#/unselfconscious-motion)
-* [False Presence](#/false-presence)
+- [Field Coherence](#/field-coherence)
+- [Conscious Self](#/conscious-self)
+- [Unselfconscious Motion](#/unselfconscious-motion)
+- [False Presence](#/false-presence)

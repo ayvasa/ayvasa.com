@@ -10,22 +10,22 @@ This mode of functioning is characterized by ease, appropriateness, and responsi
 
 ## How it shows up
 
-* Speaking or acting without rehearsing internally
-* Reduced concern with how one is perceived
-* Fluid response to changing situations
-* Less hesitation or second-guessing
-* A sense of life “moving through” rather than being pushed
+- Speaking or acting without rehearsing internally
+- Reduced concern with how one is perceived
+- Fluid response to changing situations
+- Less hesitation or second-guessing
+- A sense of life “moving through” rather than being pushed
 
 ## What it is not
 
-* Carelessness or impulsivity
-* Loss of awareness or responsibility
-* Dissociation or absence
-* A permanent or idealized condition
+- Carelessness or impulsivity
+- Loss of awareness or responsibility
+- Dissociation or absence
+- A permanent or idealized condition
 
 ## See also
 
-* [Field Coherence](#/field-coherence)
-* [Original Intelligence](#/original-intelligence)
-* [Automatic Self](#/automatic-self)
-* [Presence](#/presence)
+- [Field Coherence](#/field-coherence)
+- [Original Intelligence](#/original-intelligence)
+- [Automatic Self](#/automatic-self)
+- [Presence](#/presence)

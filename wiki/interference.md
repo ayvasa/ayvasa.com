@@ -10,21 +10,21 @@ Rather than resisting or suppressing interference, the aim is to allow it to set
 
 ## How it shows up
 
-* Persistent mental commentary or looping
-* Contradictory impulses or internal friction
-* Emotional reactivity disproportionate to the situation
-* Difficulty transitioning between states or tasks
-* A sense of effort or strain in ordinary action
+- Persistent mental commentary or looping
+- Contradictory impulses or internal friction
+- Emotional reactivity disproportionate to the situation
+- Difficulty transitioning between states or tasks
+- A sense of effort or strain in ordinary action
 
 ## What it is not
 
-* A personal flaw or failure
-* Something caused by thinking itself
-* Evidence of “doing it wrong”
-* An enemy to fight or remove
+- A personal flaw or failure
+- Something caused by thinking itself
+- Evidence of “doing it wrong”
+- An enemy to fight or remove
 
 ## See also
 
-* [Field Coherence](#/field-coherence)
-* [False Presence](#/false-presence)
-* [Automatic Self](#/automatic-self)
+- [Field Coherence](#/field-coherence)
+- [False Presence](#/false-presence)
+- [Automatic Self](#/automatic-self)

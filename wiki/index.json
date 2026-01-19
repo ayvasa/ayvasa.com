@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "updated": "2026-01-20",
   "categories": [
     {
@@ -26,8 +26,25 @@
       ],
       "related": [
         "conscious-self",
-        "original-intelligence",
-        "interference"
+        "interference",
+        "original-intelligence"
+      ]
+    },
+    {
+      "slug": "baseline",
+      "title": "Baseline",
+      "category": "core",
+      "summary": "The default level of functioning the system returns to between events.",
+      "md": "/wiki/baseline.md",
+      "aliases": [
+        "default state",
+        "baseline level"
+      ],
+      "related": [
+        "coherence",
+        "physiological-settling",
+        "regulation",
+        "wave-learning"
       ]
     },
     {
@@ -63,6 +80,23 @@
       ]
     },
     {
+      "slug": "effort",
+      "title": "Effort",
+      "category": "modes",
+      "summary": "The felt application of conscious energy to influence attention, behavior, or internal state.",
+      "md": "/wiki/effort.md",
+      "aliases": [
+        "trying",
+        "exertion"
+      ],
+      "related": [
+        "false-presence",
+        "unselfconscious-motion",
+        "baseline",
+        "coherence"
+      ]
+    },
+    {
       "slug": "false-presence",
       "title": "False Presence",
       "category": "modes",
@@ -75,7 +109,8 @@
       "related": [
         "presence",
         "interference",
-        "field-coherence"
+        "field-coherence",
+        "effort"
       ]
     },
     {
@@ -89,9 +124,43 @@
         "field alignment"
       ],
       "related": [
-        "original-intelligence",
+        "field-of-experience",
         "automatic-self",
         "conscious-self",
+        "unselfconscious-motion"
+      ]
+    },
+    {
+      "slug": "field-of-experience",
+      "title": "Field of Experience",
+      "category": "core",
+      "summary": "The total moment-to-moment context in which perception, sensation, emotion, and thought arise.",
+      "md": "/wiki/field-of-experience.md",
+      "aliases": [
+        "experience field",
+        "field"
+      ],
+      "related": [
+        "field-coherence",
+        "interference",
+        "presence",
+        "zero-field"
+      ]
+    },
+    {
+      "slug": "identity-dissolution",
+      "title": "Identity Dissolution",
+      "category": "modes",
+      "summary": "A loosening of identification with habitual self-references, roles, and narratives.",
+      "md": "/wiki/identity-dissolution.md",
+      "aliases": [
+        "identity softening",
+        "self-referencing drop"
+      ],
+      "related": [
+        "automatic-self",
+        "conscious-self",
+        "field-coherence",
         "unselfconscious-motion"
       ]
     },
@@ -113,6 +182,23 @@
       ]
     },
     {
+      "slug": "interoception",
+      "title": "Interoception",
+      "category": "core",
+      "summary": "The capacity to sense and interpret signals originating from within the body.",
+      "md": "/wiki/interoception.md",
+      "aliases": [
+        "internal sensing",
+        "body signals"
+      ],
+      "related": [
+        "physiological-settling",
+        "regulation",
+        "field-of-experience",
+        "coherence"
+      ]
+    },
+    {
       "slug": "original-intelligence",
       "title": "Original Intelligence (OI)",
       "category": "core",
@@ -127,6 +213,23 @@
         "field-coherence",
         "automatic-self",
         "conscious-self"
+      ]
+    },
+    {
+      "slug": "physiological-settling",
+      "title": "Physiological Settling",
+      "category": "core",
+      "summary": "The body’s return toward balance as activation, tension, and internal load reduce.",
+      "md": "/wiki/physiological-settling.md",
+      "aliases": [
+        "settling",
+        "nervous system settling"
+      ],
+      "related": [
+        "interference",
+        "coherence",
+        "regulation",
+        "still-point"
       ]
     },
     {
@@ -146,6 +249,57 @@
       ]
     },
     {
+      "slug": "presence-vs-coherence",
+      "title": "Presence vs Coherence",
+      "category": "core",
+      "summary": "A clarification of the difference between attentional availability (presence) and internal alignment (coherence).",
+      "md": "/wiki/presence-vs-coherence.md",
+      "aliases": [
+        "presence and coherence",
+        "presence versus coherence"
+      ],
+      "related": [
+        "presence",
+        "coherence",
+        "field-coherence",
+        "false-presence"
+      ]
+    },
+    {
+      "slug": "regulation",
+      "title": "Regulation",
+      "category": "core",
+      "summary": "The capacity to modulate internal state and recover smoothly as conditions change.",
+      "md": "/wiki/regulation.md",
+      "aliases": [
+        "self-regulation",
+        "state regulation"
+      ],
+      "related": [
+        "physiological-settling",
+        "coherence",
+        "interference",
+        "baseline"
+      ]
+    },
+    {
+      "slug": "still-point",
+      "title": "Still Point",
+      "category": "core",
+      "summary": "A moment or period where internal activity settles to a minimum and urgency drops out.",
+      "md": "/wiki/still-point.md",
+      "aliases": [
+        "stillness point",
+        "still-point moment"
+      ],
+      "related": [
+        "physiological-settling",
+        "zero-field",
+        "original-intelligence",
+        "field-coherence"
+      ]
+    },
+    {
       "slug": "unselfconscious-motion",
       "title": "Unselfconscious Motion",
       "category": "modes",
@@ -158,7 +312,25 @@
       "related": [
         "field-coherence",
         "original-intelligence",
-        "presence"
+        "presence",
+        "effort"
+      ]
+    },
+    {
+      "slug": "wave-learning",
+      "title": "Wave Learning",
+      "category": "core",
+      "summary": "Non-linear development in cycles of settling, disruption, integration, and re-stabilization.",
+      "md": "/wiki/wave-learning.md",
+      "aliases": [
+        "non-linear progress",
+        "learning in waves"
+      ],
+      "related": [
+        "baseline",
+        "regulation",
+        "physiological-settling",
+        "coherence"
       ]
     },
     {

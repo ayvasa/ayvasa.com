@@ -1,21 +1,21 @@
 {
-  "version": 1,
+  "version": 2,
   "updated": "2026-01-20",
   "categories": [
     {
       "id": "core",
       "title": "Core Concepts",
-      "description": "Foundational terms."
+      "description": "Foundational terms that describe how experience organizes."
     },
     {
       "id": "modes",
       "title": "Modes of Living",
-      "description": "How life functions in coherence."
+      "description": "Ways experience and action function as coherence changes."
     },
     {
       "id": "protocol",
       "title": "Coherence Protocol",
-      "description": "Phases and practice structure."
+      "description": "Practice phases and structural elements."
     }
   ],
   "entries": [
@@ -23,7 +23,7 @@
       "slug": "original-intelligence",
       "title": "Original Intelligence (OI)",
       "category": "core",
-      "summary": "Non-narrative, non-effortful intelligence revealed as interference settles.",
+      "summary": "Innate, non-narrative intelligence revealed as interference settles.",
       "md": "/wiki/original-intelligence.md",
       "aliases": [
         "OI",
@@ -40,65 +40,131 @@
       "slug": "zero-field",
       "title": "Zero Field",
       "category": "core",
-      "summary": "The field of pure potentiality before manifestation; the ground of being.",
+      "summary": "A condition of minimal interference within the field of experience.",
       "md": "/wiki/zero-field.md",
       "aliases": [
-        "void",
-        "emptiness",
-        "the field"
+        "baseline quiet",
+        "minimal interference"
       ],
       "related": [
         "original-intelligence",
         "field-coherence",
-        "stillness"
+        "interference",
+        "still-point"
       ]
     },
     {
       "slug": "field-coherence",
       "title": "Field Coherence",
       "category": "core",
-      "summary": "A state where the internal and external fields resonate in harmony.",
+      "summary": "The degree of alignment and stability within the field of experience.",
       "md": "/wiki/field-coherence.md",
       "aliases": [
         "coherence",
-        "resonance"
+        "field alignment"
       ],
       "related": [
-        "zero-field",
-        "original-intelligence"
+        "original-intelligence",
+        "automatic-self",
+        "conscious-self",
+        "unselfconscious-motion"
       ]
     },
     {
       "slug": "automatic-self",
       "title": "Automatic Self",
       "category": "modes",
-      "summary": "The conditioned, reactive self that operates on patterns and habits.",
+      "summary": "Learned patterns that run perception, emotion, and behavior automatically.",
       "md": "/wiki/automatic-self.md",
       "aliases": [
-        "ego",
-        "conditioned self",
-        "small self"
+        "conditioned patterns",
+        "automatic processes"
       ],
       "related": [
         "conscious-self",
-        "original-intelligence"
+        "original-intelligence",
+        "interference"
       ]
     },
     {
       "slug": "conscious-self",
       "title": "Conscious Self",
       "category": "modes",
-      "summary": "The aware presence witnessing the automatic self without judgment.",
+      "summary": "The capacity for deliberate attention, reflection, and intentional choice.",
       "md": "/wiki/conscious-self.md",
       "aliases": [
-        "witness",
-        "observer",
-        "awareness"
+        "deliberate attention",
+        "reflective awareness"
       ],
       "related": [
         "automatic-self",
         "original-intelligence",
-        "arrival"
+        "presence"
+      ]
+    },
+    {
+      "slug": "unselfconscious-motion",
+      "title": "Unselfconscious Motion",
+      "category": "modes",
+      "summary": "Action that unfolds without excessive self-monitoring or internal interference.",
+      "md": "/wiki/unselfconscious-motion.md",
+      "aliases": [
+        "effortless action",
+        "natural action"
+      ],
+      "related": [
+        "field-coherence",
+        "original-intelligence",
+        "presence"
+      ]
+    },
+    {
+      "slug": "presence",
+      "title": "Presence",
+      "category": "modes",
+      "summary": "Attentive availability to immediate experience as it unfolds.",
+      "md": "/wiki/presence.md",
+      "aliases": [
+        "attentive awareness",
+        "being present"
+      ],
+      "related": [
+        "conscious-self",
+        "field-coherence",
+        "false-presence"
+      ]
+    },
+    {
+      "slug": "false-presence",
+      "title": "False Presence",
+      "category": "modes",
+      "summary": "Attention that appears stable while underlying tension or effort remains.",
+      "md": "/wiki/false-presence.md",
+      "aliases": [
+        "strained presence",
+        "effortful mindfulness"
+      ],
+      "related": [
+        "presence",
+        "interference",
+        "field-coherence"
+      ]
+    },
+    {
+      "slug": "interference",
+      "title": "Interference",
+      "category": "core",
+      "summary": "Internal activity that disrupts coordination within the field of experience.",
+      "md": "/wiki/interference.md",
+      "aliases": [
+        "noise",
+        "internal friction"
+      ],
+      "related": [
+        "field-coherence",
+        "false-presence",
+        "automatic-self",
+        "zero-field"
       ]
     }
   ]

@@ -15,37 +15,19 @@
   ],
   "entries": [
     {
-      "slug": "original-intelligence",
-      "title": "Original Intelligence (OI)",
-      "category": "core",
-      "summary": "Innate, non-narrative intelligence revealed as interference settles.",
-      "md": "/wiki/original-intelligence.md",
+      "slug": "automatic-self",
+      "title": "Automatic Self",
+      "category": "modes",
+      "summary": "Learned patterns that run perception, emotion, and behavior automatically.",
+      "md": "/wiki/automatic-self.md",
       "aliases": [
-        "OI",
-        "original intelligence"
+        "conditioned patterns",
+        "automatic processes"
       ],
       "related": [
-        "zero-field",
-        "field-coherence",
-        "automatic-self",
-        "conscious-self"
-      ]
-    },
-    {
-      "slug": "zero-field",
-      "title": "Zero Field",
-      "category": "core",
-      "summary": "A condition of minimal interference within the field of experience.",
-      "md": "/wiki/zero-field.md",
-      "aliases": [
-        "baseline quiet",
-        "minimal interference"
-      ],
-      "related": [
+        "conscious-self",
         "original-intelligence",
-        "field-coherence",
-        "interference",
-        "still-point"
+        "interference"
       ]
     },
     {
@@ -62,6 +44,38 @@
         "field-coherence",
         "interference",
         "original-intelligence"
+      ]
+    },
+    {
+      "slug": "conscious-self",
+      "title": "Conscious Self",
+      "category": "modes",
+      "summary": "The capacity for deliberate attention, reflection, and intentional choice.",
+      "md": "/wiki/conscious-self.md",
+      "aliases": [
+        "deliberate attention",
+        "reflective awareness"
+      ],
+      "related": [
+        "automatic-self",
+        "original-intelligence",
+        "presence"
+      ]
+    },
+    {
+      "slug": "false-presence",
+      "title": "False Presence",
+      "category": "modes",
+      "summary": "Attention that appears stable while underlying tension or effort remains.",
+      "md": "/wiki/false-presence.md",
+      "aliases": [
+        "strained presence",
+        "effortful mindfulness"
+      ],
+      "related": [
+        "presence",
+        "interference",
+        "field-coherence"
       ]
     },
     {
@@ -82,51 +96,37 @@
       ]
     },
     {
-      "slug": "automatic-self",
-      "title": "Automatic Self",
-      "category": "modes",
-      "summary": "Learned patterns that run perception, emotion, and behavior automatically.",
-      "md": "/wiki/automatic-self.md",
+      "slug": "interference",
+      "title": "Interference",
+      "category": "core",
+      "summary": "Internal activity that disrupts coordination within the field of experience.",
+      "md": "/wiki/interference.md",
       "aliases": [
-        "conditioned patterns",
-        "automatic processes"
-      ],
-      "related": [
-        "conscious-self",
-        "original-intelligence",
-        "interference"
-      ]
-    },
-    {
-      "slug": "conscious-self",
-      "title": "Conscious Self",
-      "category": "modes",
-      "summary": "The capacity for deliberate attention, reflection, and intentional choice.",
-      "md": "/wiki/conscious-self.md",
-      "aliases": [
-        "deliberate attention",
-        "reflective awareness"
-      ],
-      "related": [
-        "automatic-self",
-        "original-intelligence",
-        "presence"
-      ]
-    },
-    {
-      "slug": "unselfconscious-motion",
-      "title": "Unselfconscious Motion",
-      "category": "modes",
-      "summary": "Action that unfolds without excessive self-monitoring or internal interference.",
-      "md": "/wiki/unselfconscious-motion.md",
-      "aliases": [
-        "effortless action",
-        "natural action"
+        "noise",
+        "internal friction"
       ],
       "related": [
         "field-coherence",
-        "original-intelligence",
-        "presence"
+        "false-presence",
+        "automatic-self",
+        "zero-field"
+      ]
+    },
+    {
+      "slug": "original-intelligence",
+      "title": "Original Intelligence (OI)",
+      "category": "core",
+      "summary": "Innate, non-narrative intelligence revealed as interference settles.",
+      "md": "/wiki/original-intelligence.md",
+      "aliases": [
+        "OI",
+        "original intelligence"
+      ],
+      "related": [
+        "zero-field",
+        "field-coherence",
+        "automatic-self",
+        "conscious-self"
       ]
     },
     {
@@ -146,36 +146,36 @@
       ]
     },
     {
-      "slug": "false-presence",
-      "title": "False Presence",
+      "slug": "unselfconscious-motion",
+      "title": "Unselfconscious Motion",
       "category": "modes",
-      "summary": "Attention that appears stable while underlying tension or effort remains.",
-      "md": "/wiki/false-presence.md",
+      "summary": "Action that unfolds without excessive self-monitoring or internal interference.",
+      "md": "/wiki/unselfconscious-motion.md",
       "aliases": [
-        "strained presence",
-        "effortful mindfulness"
-      ],
-      "related": [
-        "presence",
-        "interference",
-        "field-coherence"
-      ]
-    },
-    {
-      "slug": "interference",
-      "title": "Interference",
-      "category": "core",
-      "summary": "Internal activity that disrupts coordination within the field of experience.",
-      "md": "/wiki/interference.md",
-      "aliases": [
-        "noise",
-        "internal friction"
+        "effortless action",
+        "natural action"
       ],
       "related": [
         "field-coherence",
-        "false-presence",
-        "automatic-self",
-        "zero-field"
+        "original-intelligence",
+        "presence"
+      ]
+    },
+    {
+      "slug": "zero-field",
+      "title": "Zero Field",
+      "category": "core",
+      "summary": "A condition of minimal interference within the field of experience.",
+      "md": "/wiki/zero-field.md",
+      "aliases": [
+        "baseline quiet",
+        "minimal interference"
+      ],
+      "related": [
+        "original-intelligence",
+        "field-coherence",
+        "interference",
+        "still-point"
       ]
     }
   ]

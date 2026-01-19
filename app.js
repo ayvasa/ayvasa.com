@@ -504,6 +504,259 @@
     banner.hidden = dismissed || completed;
   };
 
+  // --- Wiki Logic ---
+
+  const renderMarkdownSafe = (md) => {
+    if (!md) return "";
+
+    // 1. Escape HTML
+    let safe = md
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+    // 2. Headings
+    safe = safe.replace(/^### (.*$)/gim, "<h3>$1</h3>");
+    safe = safe.replace(/^## (.*$)/gim, "<h2>$1</h2>");
+    safe = safe.replace(/^# (.*$)/gim, "<h2>$1</h2>");
+
+    // 3. Lists (handle simple hyphen lists)
+    safe = safe.replace(/^\- (.*$)/gim, "<li>$1</li>");
+
+    // 4. Inline styles
+    safe = safe.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    safe = safe.replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+    // 5. Links
+    safe = safe.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, text, url) => {
+      const isInternal = url.startsWith("#") || url.startsWith("./");
+      const target = isInternal ? "" : ' target="_blank" rel="noopener noreferrer"';
+      return `<a href="${url}"${target}>${text}</a>`;
+    });
+
+    // 6. Block processing (Paragraphs & Lists)
+    const blocks = safe.split(/\n\n+/);
+    return blocks
+      .map((block) => {
+        const trimmed = block.trim();
+        if (!trimmed) return "";
+        if (trimmed.startsWith("<h")) return trimmed;
+        if (trimmed.includes("<li>")) {
+          // Wrap list items in ul
+          return `<ul>${trimmed}</ul>`;
+        }
+        return `<p>${trimmed.replace(/\n/g, "<br>")}</p>`;
+      })
+      .join("\n");
+  };
+
+  const setupWiki = () => {
+    const searchInput = document.getElementById("wikiSearch");
+    const chipsContainer = document.getElementById("wikiChips");
+    const resultsContainer = document.getElementById("wikiResults");
+
+    const overlay = document.getElementById("wikiOverlay");
+    const overlayTitle = document.getElementById("wikiOverlayTitle");
+    const overlayMeta = document.getElementById("wikiOverlayMeta");
+    const overlayBody = document.getElementById("wikiOverlayBody");
+    const overlayRelated = document.getElementById("wikiOverlayRelated");
+    const closeButtons = document.querySelectorAll("[data-wiki-close]");
+
+    let allEntries = [];
+    let categories = [];
+    let activeCategory = "all";
+
+    // --- Rendering ---
+    const renderChips = () => {
+      chipsContainer.innerHTML = "";
+
+      const makeChip = (id, label) => {
+        const btn = document.createElement("button");
+        btn.className = `chip ${activeCategory === id ? "active" : ""}`;
+        btn.textContent = label;
+        btn.addEventListener("click", () => {
+          activeCategory = id;
+          renderChips();
+          filterAndRender();
+        });
+        return btn;
+      };
+
+      chipsContainer.appendChild(makeChip("all", "All"));
+      categories.forEach(cat => {
+        chipsContainer.appendChild(makeChip(cat.id, cat.title));
+      });
+    };
+
+    const renderEntryCard = (entry) => {
+      const cat = categories.find(c => c.id === entry.category);
+      const div = document.createElement("button");
+      div.className = "wiki-card";
+      div.setAttribute("type", "button");
+      div.innerHTML = `
+        <div class="wiki-card__title">${entry.title}</div>
+        <div class="wiki-card__category">${cat ? cat.title : entry.category}</div>
+        <div class="wiki-card__summary">${entry.summary}</div>
+      `;
+      div.addEventListener("click", () => {
+        openEntry(entry.slug);
+      });
+      return div;
+    };
+
+    const filterAndRender = () => {
+      const query = searchInput.value.toLowerCase().trim();
+      resultsContainer.innerHTML = "";
+
+      const filtered = allEntries.filter(entry => {
+        const matchesCategory = activeCategory === "all" || entry.category === activeCategory;
+        const searchTarget = (entry.title + " " + entry.summary + " " + (entry.aliases || []).join(" ")).toLowerCase();
+        const matchesSearch = !query || searchTarget.includes(query);
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        resultsContainer.innerHTML = `<div class="wiki-empty">No entries found.</div>`;
+        return;
+      }
+
+      filtered.forEach(entry => {
+        resultsContainer.appendChild(renderEntryCard(entry));
+      });
+    };
+
+    // --- Overlay / Entry Logic ---
+    const openEntry = async (slug) => {
+      const entry = allEntries.find(e => e.slug === slug);
+      if (!entry) return;
+
+      // Update URL hash
+      window.location.hash = `/${slug}`;
+
+      overlayTitle.textContent = entry.title;
+      overlayMeta.innerHTML = "";
+      overlayBody.innerHTML = "<p>Loading...</p>";
+      overlayRelated.innerHTML = "";
+      overlayRelated.hidden = true;
+
+      // Meta chips (Category)
+      const cat = categories.find(c => c.id === entry.category);
+      if (cat) {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = cat.title;
+        overlayMeta.appendChild(chip);
+      }
+
+      setOverlayVisible(overlay, true);
+
+      // Fetch MD
+      try {
+        const res = await fetch(entry.md);
+        if (res.ok) {
+          const text = await res.text();
+          overlayBody.innerHTML = renderMarkdownSafe(text);
+
+          // Wire up internal hash links in rendered content
+          overlayBody.querySelectorAll('a[href^="#/"]').forEach(link => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const hash = link.getAttribute("href"); // #/slug
+              const nextSlug = hash.replace("#/", "");
+              openEntry(nextSlug);
+            });
+          });
+        } else {
+          overlayBody.innerHTML = "<p>Error loading content.</p>";
+        }
+      } catch (err) {
+        overlayBody.innerHTML = "<p>Error loading content.</p>";
+      }
+
+      // Related
+      if (entry.related && entry.related.length > 0) {
+        overlayRelated.innerHTML = "";
+        overlayRelated.hidden = false;
+        entry.related.forEach(relSlug => {
+          const relEntry = allEntries.find(e => e.slug === relSlug);
+          if (relEntry) {
+            const btn = document.createElement("button");
+            btn.className = "chip";
+            btn.textContent = relEntry.title;
+            btn.addEventListener("click", () => openEntry(relSlug));
+            overlayRelated.appendChild(btn);
+          }
+        });
+      }
+    };
+
+    const closeOverlay = () => {
+      setOverlayVisible(overlay, false);
+      // Clear hash without scroll jump
+      history.pushState("", document.title, window.location.pathname + window.location.search);
+    };
+
+    // --- Event Listeners ---
+    searchInput.addEventListener("input", filterAndRender);
+
+    closeButtons.forEach(btn => btn.addEventListener("click", closeOverlay));
+
+    // Close on ESC
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !overlay.hidden) closeOverlay();
+    });
+
+    // Handle back button / hash change
+    window.addEventListener("hashchange", () => {
+      processHash();
+    });
+
+    const processHash = () => {
+      const hash = window.location.hash;
+      if (hash && hash.startsWith("#/")) {
+        const slug = hash.substring(2);
+        if (slug) openEntry(slug);
+      } else {
+        if (!overlay.hidden) closeOverlay();
+      }
+    };
+
+    // --- Init ---
+    if (window.location.protocol === "file:") {
+      resultsContainer.innerHTML = `
+        <div class="wiki-empty">
+          <p><strong>Local Filesystem Detected</strong></p>
+          <p>Browsers block loading external data (JSON/Markdown) via <code>file://</code> protocol for security.</p>
+          <p>To view the Wiki locally, please run a local web server (e.g., <code>python3 -m http.server</code>) or view via VS Code Live Server.</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Add cache busting to ensure fresh data
+    fetch(`wiki/index.json?t=${new Date().getTime()}`)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        categories = data.categories || [];
+        allEntries = data.entries || [];
+        renderChips();
+        filterAndRender();
+        processHash(); // Check initial hash
+      })
+      .catch(err => {
+        console.error("Failed to load wiki index:", err);
+        resultsContainer.innerHTML = `
+          <div class="wiki-empty">
+            <p>Unable to load Wiki data.</p>
+            <p class="muted">${err.message}</p>
+          </div>
+        `;
+      });
+  };
+
   // --- IndexedDB & Shared Helpers ---
 
   const dbState = {
@@ -1766,6 +2019,7 @@
   const page = document.body.dataset.page;
   if (page === "home") safeCall("home", setupHome);
   if (page === "practice") safeCall("practice", setupPractice);
+  if (page === "wiki") safeCall("wiki", setupWiki);
 
   safeCall("install promo", setupInstallPromo);
   safeCall("footer year", setupFooterYear);

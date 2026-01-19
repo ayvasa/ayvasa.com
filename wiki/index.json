@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "updated": "2026-01-20",
+  "categories": [
+    { "id": "core", "title": "Core Concepts", "description": "Foundational terms." },
+    { "id": "modes", "title": "Modes of Living", "description": "How life functions in coherence." },
+    { "id": "protocol", "title": "Coherence Protocol", "description": "Phases and practice structure." }
+  ],
+  "entries": [
+    {
+      "slug": "original-intelligence",
+      "title": "Original Intelligence (OI)",
+      "category": "core",
+      "summary": "Non-narrative, non-effortful intelligence revealed as interference settles.",
+      "md": "/wiki/original-intelligence.md",
+      "aliases": ["OI", "original intelligence"],
+      "related": ["zero-field", "field-coherence", "automatic-self", "conscious-self"]
+    },
+    {
+      "slug": "zero-field",
+      "title": "Zero Field",
+      "category": "core",
+      "summary": "The field of pure potentiality before manifestation; the ground of being.",
+      "md": "/wiki/zero-field.md",
+      "aliases": ["void", "emptiness", "the field"],
+      "related": ["original-intelligence", "field-coherence", "stillness"]
+    },
+    {
+      "slug": "field-coherence",
+      "title": "Field Coherence",
+      "category": "core",
+      "summary": "A state where the internal and external fields resonate in harmony.",
+      "md": "/wiki/field-coherence.md",
+      "aliases": ["coherence", "resonance"],
+      "related": ["zero-field", "original-intelligence"]
+    },
+    {
+      "slug": "automatic-self",
+      "title": "Automatic Self",
+      "category": "modes",
+      "summary": "The conditioned, reactive self that operates on patterns and habits.",
+      "md": "/wiki/automatic-self.md",
+      "aliases": ["ego", "conditioned self", "small self"],
+      "related": ["conscious-self", "original-intelligence"]
+    },
+    {
+      "slug": "conscious-self",
+      "title": "Conscious Self",
+      "category": "modes",
+      "summary": "The aware presence witnessing the automatic self without judgment.",
+      "md": "/wiki/conscious-self.md",
+      "aliases": ["witness", "observer", "awareness"],
+      "related": ["automatic-self", "original-intelligence", "arrival"]
+    },
+    {
+      "slug": "arrival",
+      "title": "Arrival (Phase 0)",
+      "category": "protocol",
+      "summary": "The initial phase of the protocol: landing in the present moment.",
+      "md": "/wiki/arrival.md",
+      "aliases": ["phase 0", "grounding"],
+      "related": ["turning-inward", "conscious-self"]
+    },
+    {
+      "slug": "turning-inward",
+      "title": "Turning Inward (Phase 1)",
+      "category": "protocol",
+      "summary": "Directing attention from external objects to internal sensation.",
+      "md": "/wiki/turning-inward.md",
+      "aliases": ["phase 1", "introversion"],
+      "related": ["arrival", "deceleration"]
+    },
+    {
+      "slug": "deceleration",
+      "title": "Deceleration (Phase 2)",
+      "category": "protocol",
+      "summary": "Slowing down the frequency of thought and nervous system activity.",
+      "md": "/wiki/deceleration.md",
+      "aliases": ["phase 2", "slowing down"],
+      "related": ["turning-inward", "expansion"]
+    },
+    {
+      "slug": "expansion",
+      "title": "Expansion (Phase 3)",
+      "category": "protocol",
+      "summary": "The natural widening of awareness as contraction releases.",
+      "md": "/wiki/expansion.md",
+      "aliases": ["phase 3", "spaciousness"],
+      "related": ["deceleration", "stillness"]
+    },
+    {
+      "slug": "stillness",
+      "title": "Stillness (Phase 4)",
+      "category": "protocol",
+      "summary": "The cessation of movement where Original Intelligence becomes clear.",
+      "md": "/wiki/stillness.md",
+      "aliases": ["phase 4", "silence"],
+      "related": ["expansion", "zero-field", "original-intelligence"]
+    }
+  ]
+}

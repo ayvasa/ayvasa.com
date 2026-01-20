@@ -588,7 +588,7 @@
         btn.addEventListener("click", () => {
           activeCategory = id;
           renderChips();
-          filterAndRender();
+          applyFilters();
         });
         return btn;
       };
@@ -615,9 +615,12 @@
       return div;
     };
 
-    const filterAndRender = () => {
+    let currentPage = 1;
+    const ITEMS_PER_PAGE = 10;
+    let filteredEntries = [];
+
+    const getFilteredEntries = () => {
       const query = searchInput.value.toLowerCase().trim();
-      resultsContainer.innerHTML = "";
 
       const filtered = allEntries.filter(entry => {
         const matchesCategory = activeCategory === "all" || entry.category === activeCategory;
@@ -641,14 +644,75 @@
         filtered.reverse();
       }
 
-      if (filtered.length === 0) {
+      return filtered;
+    };
+
+    const renderPaginationControls = () => {
+      const paginationContainer = document.getElementById("wikiPagination");
+      if (!paginationContainer) return;
+
+      const totalPages = Math.ceil(filteredEntries.length / ITEMS_PER_PAGE);
+      paginationContainer.innerHTML = "";
+      paginationContainer.hidden = totalPages <= 1;
+
+      if (totalPages <= 1) return;
+
+      const prevBtn = document.createElement("button");
+      prevBtn.className = "button ghost tiny";
+      prevBtn.textContent = "Previous";
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderCurrentPage();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+
+      const nextBtn = document.createElement("button");
+      nextBtn.className = "button ghost tiny";
+      nextBtn.textContent = "Next";
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.addEventListener("click", () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderCurrentPage();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+
+      const infoObj = document.createElement("span");
+      infoObj.textContent = `Page ${currentPage} of ${totalPages}`;
+
+      paginationContainer.appendChild(prevBtn);
+      paginationContainer.appendChild(infoObj);
+      paginationContainer.appendChild(nextBtn);
+    };
+
+    const renderCurrentPage = () => {
+      resultsContainer.innerHTML = "";
+
+      if (filteredEntries.length === 0) {
         resultsContainer.innerHTML = `<div class="wiki-empty">No entries found.</div>`;
+        renderPaginationControls();
         return;
       }
 
-      filtered.forEach(entry => {
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const pageSlice = filteredEntries.slice(startIndex, endIndex);
+
+      pageSlice.forEach(entry => {
         resultsContainer.appendChild(renderEntryCard(entry));
       });
+
+      renderPaginationControls();
+    };
+
+    const applyFilters = () => {
+      filteredEntries = getFilteredEntries();
+      currentPage = 1;
+      renderCurrentPage();
     };
 
     // --- Overlay / Entry Logic ---
@@ -723,14 +787,14 @@
     };
 
     // --- Event Listeners ---
-    searchInput.addEventListener("input", filterAndRender);
+    searchInput.addEventListener("input", applyFilters);
 
     if (sortToggle) {
       sortToggle.addEventListener("click", () => {
         sortDirection = sortDirection === "asc" ? "desc" : "asc";
         window.localStorage.setItem("wikiSortDirection", sortDirection);
         renderSortToggle();
-        filterAndRender();
+        applyFilters();
       });
     }
 
@@ -797,7 +861,7 @@
 
         renderSortToggle();
         renderChips();
-        filterAndRender();
+        applyFilters();
         processHash();
       })
       .catch(err => {

@@ -490,6 +490,10 @@ input[type="file"]:focus-visible,
   gap: var(--s-3);
 }
 
+[data-theme="dark"] .protocol-banner {
+  background: var(--bg-element);
+}
+
 .protocol-banner__actions {
   display: flex;
   flex-wrap: wrap;

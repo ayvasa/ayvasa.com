@@ -2134,6 +2134,61 @@
     }
   };
 
+  const setupTheme = () => {
+    const toggleBtn = document.getElementById("themeToggle");
+
+    // Icons
+    const ICON_SUN = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>`;
+    const ICON_MOON = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>`;
+
+    // 1. Get preference
+    const saved = window.localStorage.getItem("theme");
+
+    const applyTheme = (theme) => {
+      if (theme === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        if (toggleBtn) {
+          toggleBtn.innerHTML = ICON_SUN;
+          toggleBtn.setAttribute("aria-label", "Switch to light mode");
+        }
+      } else {
+        document.documentElement.removeAttribute("data-theme");
+        if (toggleBtn) {
+          toggleBtn.innerHTML = ICON_MOON;
+          toggleBtn.setAttribute("aria-label", "Switch to dark mode");
+        }
+      }
+    };
+
+    // Initial load
+    if (saved) {
+      applyTheme(saved);
+    } else {
+      // Check system preference
+      const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (systemDark) {
+        applyTheme("dark");
+      } else {
+        applyTheme("light");
+      }
+    }
+
+    if (!toggleBtn) return;
+
+    toggleBtn.addEventListener("click", () => {
+      const current = document.documentElement.getAttribute("data-theme");
+      if (current === "dark") {
+        // Switch to light
+        applyTheme("light");
+        window.localStorage.setItem("theme", "light");
+      } else {
+        // Switch to dark
+        applyTheme("dark");
+        window.localStorage.setItem("theme", "dark");
+      }
+    });
+  };
+
   const page = document.body.dataset.page;
   if (page === "home") safeCall("home", setupHome);
   if (page === "practice") safeCall("practice", setupPractice);
@@ -2142,4 +2197,5 @@
   safeCall("install promo", setupInstallPromo);
   safeCall("footer year", setupFooterYear);
   safeCall("AOPL modal", setupAoplModal);
+  safeCall("theme", setupTheme);
 })();

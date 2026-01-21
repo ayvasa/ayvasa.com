@@ -798,6 +798,322 @@
       });
     }
 
+    // --- Init ---
+    fetch("wiki/index.json")
+      .then((res) => res.json())
+      .then((data) => {
+        allEntries = data.entries;
+        categories = data.categories;
+        bodyBySlug = new Map();
+
+        allEntries.forEach((e) => {
+          fetch(e.md)
+            .then((r) => r.text())
+            .then((txt) => bodyBySlug.set(e.slug, txt))
+            .then(applyFilters); // Re-run search/filter once body loads
+        });
+
+        renderChips();
+        renderSortToggle();
+        applyFilters();
+
+        if (window.location.hash) {
+          const slug = window.location.hash.replace("#/", "");
+          openEntry(slug);
+        }
+      })
+      .catch((err) => {
+        resultsContainer.innerHTML = "<p>Unable to load Wiki index.</p>";
+      });
+  };
+
+  // --- Help Logic ---
+
+  const setupHelp = () => {
+    const searchInput = document.getElementById("helpSearch");
+    const chipsContainer = document.getElementById("helpChips");
+    const resultsContainer = document.getElementById("helpResults");
+    const sortToggle = document.getElementById("helpSortToggle");
+
+    const overlay = document.getElementById("helpOverlay");
+    const overlayTitle = document.getElementById("helpOverlayTitle");
+    const overlayMeta = document.getElementById("helpOverlayMeta");
+    const overlayBody = document.getElementById("helpOverlayBody");
+    const overlayRelated = document.getElementById("helpOverlayRelated");
+    const closeButtons = document.querySelectorAll("[data-help-close]");
+
+    let allEntries = [];
+    let categories = [];
+    let activeCategory = "all";
+    let sortDirection = window.localStorage.getItem("helpSortDirection") || "asc";
+    let bodyBySlug = new Map();
+
+    // --- Rendering ---
+    const renderSortToggle = () => {
+      if (!sortToggle) return;
+      sortToggle.textContent = sortDirection === "asc" ? "A–Z" : "Z–A";
+      sortToggle.setAttribute("aria-label", `Sort: ${sortDirection === "asc" ? "A to Z" : "Z to A"}`);
+    };
+    const renderChips = () => {
+      chipsContainer.innerHTML = "";
+
+      const makeChip = (id, label) => {
+        const btn = document.createElement("button");
+        btn.className = `chip ${activeCategory === id ? "active" : ""}`;
+        btn.textContent = label;
+        btn.addEventListener("click", () => {
+          activeCategory = id;
+          renderChips();
+          applyFilters();
+        });
+        return btn;
+      };
+
+      chipsContainer.appendChild(makeChip("all", "All"));
+      categories.forEach(cat => {
+        chipsContainer.appendChild(makeChip(cat.id, cat.title));
+      });
+    };
+
+    const renderEntryCard = (entry) => {
+      const cat = categories.find(c => c.id === entry.category);
+      const div = document.createElement("button");
+      div.className = "wiki-card";
+      div.setAttribute("type", "button");
+      div.innerHTML = `
+        <div class="wiki-card__title">${entry.title}</div>
+        <div class="wiki-card__category">${cat ? cat.title : entry.category}</div>
+        <div class="wiki-card__summary">${entry.summary}</div>
+      `;
+      div.addEventListener("click", () => {
+        openEntry(entry.slug);
+      });
+      return div;
+    };
+
+    let currentPage = 1;
+    const ITEMS_PER_PAGE = 8;
+    let filteredEntries = [];
+
+    const getFilteredEntries = () => {
+      const query = searchInput.value.toLowerCase().trim();
+
+      const filtered = allEntries.filter(entry => {
+        const matchesCategory = activeCategory === "all" || entry.category === activeCategory;
+        const body = bodyBySlug.get(entry.slug) || "";
+        const searchTarget = (
+          (entry.title || "") + " " +
+          (entry.summary || "") + " " +
+          (Array.isArray(entry.aliases) ? entry.aliases.join(" ") : "") + " " +
+          body
+        ).toLowerCase();
+
+        const matchesSearch = !query || searchTarget.includes(query);
+        return matchesCategory && matchesSearch;
+      });
+
+      return filtered.sort((a, b) => {
+        const titleA = (a.title || "").toLowerCase();
+        const titleB = (b.title || "").toLowerCase();
+        if (sortDirection === "asc") {
+          return titleA.localeCompare(titleB);
+        } else {
+          return titleB.localeCompare(titleA);
+        }
+      });
+    };
+
+    const renderPaginationControls = () => {
+      const paginationContainer = document.getElementById("helpPagination");
+      if (!paginationContainer) return;
+
+      const totalPages = Math.ceil(filteredEntries.length / ITEMS_PER_PAGE);
+      paginationContainer.innerHTML = "";
+      paginationContainer.hidden = totalPages <= 1;
+
+      if (totalPages <= 1) return;
+
+      const prevBtn = document.createElement("button");
+      prevBtn.className = "button ghost tiny";
+      prevBtn.textContent = "Previous";
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.addEventListener("click", () => {
+        if (currentPage > 1) {
+          currentPage--;
+          renderCurrentPage();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+
+      const nextBtn = document.createElement("button");
+      nextBtn.className = "button ghost tiny";
+      nextBtn.textContent = "Next";
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.addEventListener("click", () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          renderCurrentPage();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      });
+
+      const infoObj = document.createElement("span");
+      infoObj.textContent = `Page ${currentPage} of ${totalPages}`;
+
+      paginationContainer.appendChild(prevBtn);
+      paginationContainer.appendChild(infoObj);
+      paginationContainer.appendChild(nextBtn);
+    };
+
+    const renderCurrentPage = () => {
+      resultsContainer.innerHTML = "";
+
+      if (filteredEntries.length === 0) {
+        resultsContainer.innerHTML = `<div class="wiki-empty">No topics found.</div>`;
+        renderPaginationControls();
+        return;
+      }
+
+      const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+      const endIndex = startIndex + ITEMS_PER_PAGE;
+      const pageSlice = filteredEntries.slice(startIndex, endIndex);
+
+      pageSlice.forEach(entry => {
+        resultsContainer.appendChild(renderEntryCard(entry));
+      });
+
+      renderPaginationControls();
+    };
+
+    const applyFilters = () => {
+      filteredEntries = getFilteredEntries();
+      currentPage = 1;
+      renderCurrentPage();
+    };
+
+    // --- Overlay / Entry Logic ---
+    const openEntry = async (slug) => {
+      const entry = allEntries.find(e => e.slug === slug);
+      if (!entry) return;
+
+      window.location.hash = `/${slug}`;
+
+      overlayTitle.textContent = entry.title;
+      overlayMeta.innerHTML = "";
+      overlayBody.innerHTML = "<p>Loading...</p>";
+      overlayRelated.innerHTML = "";
+      overlayRelated.hidden = true;
+
+      const cat = categories.find(c => c.id === entry.category);
+      if (cat) {
+        const chip = document.createElement("span");
+        chip.className = "chip";
+        chip.textContent = cat.title;
+        overlayMeta.appendChild(chip);
+      }
+
+      setOverlayVisible(overlay, true);
+
+      try {
+        const res = await fetch(entry.md);
+        if (res.ok) {
+          const text = await res.text();
+          overlayBody.innerHTML = renderMarkdownSafe(text);
+
+          overlayBody.querySelectorAll('a[href^="#/"]').forEach(link => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              const hash = link.getAttribute("href");
+              const nextSlug = hash.replace("#/", "");
+              openEntry(nextSlug);
+            });
+          });
+        } else {
+          overlayBody.innerHTML = "<p>Error loading content.</p>";
+        }
+      } catch (err) {
+        overlayBody.innerHTML = "<p>Error loading content.</p>";
+      }
+    };
+
+    const closeOverlay = () => {
+      setOverlayVisible(overlay, false);
+      history.pushState("", document.title, window.location.pathname + window.location.search);
+    };
+
+    // --- Event Listeners ---
+    searchInput.addEventListener("input", applyFilters);
+
+    closeButtons.forEach((btn) => {
+      btn.addEventListener("click", closeOverlay);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.code === "Escape" && !overlay.hidden) {
+        closeOverlay();
+      }
+    });
+
+    overlay.addEventListener("click", (event) => {
+      if (event.target === document.querySelector("#helpOverlay > .overlay-scrim")) {
+        closeOverlay();
+      }
+    });
+
+    // --- Init ---
+    // --- Init ---
+    // Fetch both the structure index and the full search index (if available)
+    Promise.all([
+      fetch("help/index.json").then(r => r.json()),
+      fetch("help/search-index.json").then(r => r.ok ? r.json() : null).catch(() => null)
+    ])
+      .then(([structureData, searchData]) => {
+        // 1. Setup Structure
+        allEntries = structureData.entries;
+        categories = structureData.categories;
+        bodyBySlug = new Map();
+
+        // 2. Setup Search / Body Content
+        if (searchData && Array.isArray(searchData.entries)) {
+          console.log("Using pre-computed Help search index.");
+          // Pre-populate bodyBySlug with the stripped body text from the index
+          // This allows search to work immediately without fetching every MD file.
+          searchData.entries.forEach(e => {
+            if (e.body) bodyBySlug.set(e.slug, e.body);
+          });
+          // We still need the original MD path from structureData for full render
+          // but we can search instantly.
+        } else {
+          console.log("Pre-computed index not found. Falling back to runtime fetch.");
+          // Fallback: fetch all MD files to build the body index (network heavy)
+          allEntries.forEach((e) => {
+            fetch(e.md)
+              .then((r) => r.text())
+              .then((txt) => {
+                // Approximate strip for search
+                // (In a real app we might want a better runtime stripper,
+                // but raw MD is okay-ish for a fallback search)
+                bodyBySlug.set(e.slug, txt);
+                applyFilters(); // Re-run filters as data comes in
+              });
+          });
+        }
+
+        renderChips();
+        renderSortToggle();
+        applyFilters();
+
+        if (window.location.hash) {
+          const slug = window.location.hash.replace("#/", "");
+          openEntry(slug);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        resultsContainer.innerHTML = "<p>Unable to load Help index.</p>";
+      });
+
+
     closeButtons.forEach(btn => btn.addEventListener("click", closeOverlay));
 
     // Close on ESC
@@ -820,59 +1136,7 @@
       }
     };
 
-    // --- Init ---
-    if (window.location.protocol === "file:") {
-      resultsContainer.innerHTML = `
-        <div class="wiki-empty">
-          <p><strong>Local Filesystem Detected</strong></p>
-          <p>Browsers block loading external data (JSON/Markdown) via <code>file://</code> protocol for security.</p>
-          <p>To view the Wiki locally, please run a local web server (e.g., <code>python3 -m http.server</code>) or view via VS Code Live Server.</p>
-        </div>
-      `;
-      return;
-    }
 
-    let bodyBySlug = new Map();
-    let hasFullText = false;
-    const cacheBust = new Date().getTime();
-
-    Promise.all([
-      fetch(`wiki/index.json?t=${cacheBust}`).then(r => {
-        if (!r.ok) throw new Error(`wiki/index.json HTTP ${r.status}`);
-        return r.json();
-      }),
-      fetch(`wiki/search-index.json?t=${cacheBust}`)
-        .then(r => (r.ok ? r.json() : null))
-        .catch(() => null)
-    ])
-      .then(([indexData, searchData]) => {
-        categories = indexData.categories || [];
-        allEntries = indexData.entries || [];
-
-        bodyBySlug = new Map();
-        hasFullText = false;
-
-        if (searchData && Array.isArray(searchData.entries)) {
-          hasFullText = true;
-          for (const e of searchData.entries) {
-            bodyBySlug.set(e.slug, (e.body || "").toLowerCase());
-          }
-        }
-
-        renderSortToggle();
-        renderChips();
-        applyFilters();
-        processHash();
-      })
-      .catch(err => {
-        console.error("Failed to load wiki:", err);
-        resultsContainer.innerHTML = `
-        <div class="wiki-empty">
-          <p>Unable to load Wiki data.</p>
-          <p class="muted">${err.message}</p>
-        </div>
-      `;
-      });
   };
 
   // --- IndexedDB & Shared Helpers ---
@@ -2193,6 +2457,7 @@
   if (page === "home") safeCall("home", setupHome);
   if (page === "practice") safeCall("practice", setupPractice);
   if (page === "wiki") safeCall("wiki", setupWiki);
+  if (page === "help") safeCall("help", setupHelp);
 
   safeCall("install promo", setupInstallPromo);
   safeCall("footer year", setupFooterYear);

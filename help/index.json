@@ -1,0 +1,143 @@
+{
+    "version": 1,
+    "updated": "2026-01-21",
+    "categories": [
+        {
+            "id": "overview",
+            "title": "Overview",
+            "description": "General information about the app."
+        },
+        {
+            "id": "practice",
+            "title": "Practice",
+            "description": "Using the practice tracker."
+        },
+        {
+            "id": "data",
+            "title": "Data & Privacy",
+            "description": "Managing your data."
+        },
+        {
+            "id": "details",
+            "title": "Details",
+            "description": "Design choices and troubleshooting."
+        }
+    ],
+    "entries": [
+        {
+            "slug": "what-this-app-is",
+            "title": "What this app is",
+            "category": "overview",
+            "summary": "What Ayvasa is, what it is not, and how to understand the app’s purpose.",
+            "md": "/help/what-this-app-is.md",
+            "aliases": [
+                "intro",
+                "about"
+            ]
+        },
+        {
+            "slug": "starting-session",
+            "title": "Starting a session",
+            "category": "practice",
+            "summary": "How to begin a session and what to expect once you start.",
+            "md": "/help/starting-session.md",
+            "aliases": [
+                "begin"
+            ]
+        },
+        {
+            "slug": "completing-saving",
+            "title": "Completing and saving",
+            "category": "practice",
+            "summary": "How sessions end, how reflections work, and when data is saved.",
+            "md": "/help/completing-saving.md",
+            "aliases": [
+                "save",
+                "log"
+            ]
+        },
+        {
+            "slug": "viewing-sessions",
+            "title": "Viewing your sessions",
+            "category": "practice",
+            "summary": "How to review, edit, and manage your past sessions.",
+            "md": "/help/viewing-sessions.md",
+            "aliases": [
+                "history",
+                "stats"
+            ]
+        },
+        {
+            "slug": "your-data",
+            "title": "Your data (important)",
+            "category": "data",
+            "summary": "How your data is stored, what stays local, and what to be aware of.",
+            "md": "/help/your-data.md",
+            "aliases": [
+                "privacy",
+                "storage"
+            ]
+        },
+        {
+            "slug": "backing-up",
+            "title": "Backing up your sessions",
+            "category": "data",
+            "summary": "How to export your data and why regular backups matter.",
+            "md": "/help/backing-up.md",
+            "aliases": [
+                "export",
+                "backup"
+            ]
+        },
+        {
+            "slug": "restoring-moving",
+            "title": "Restoring or moving data",
+            "category": "data",
+            "summary": "How to import session data on a new device or browser.",
+            "md": "/help/restoring-moving.md",
+            "aliases": [
+                "import",
+                "restore"
+            ]
+        },
+        {
+            "slug": "clearing-sessions",
+            "title": "Clearing all sessions",
+            "category": "data",
+            "summary": "How to permanently remove all locally stored session data.",
+            "md": "/help/clearing-sessions.md",
+            "aliases": [
+                "delete",
+                "reset"
+            ]
+        },
+        {
+            "slug": "design-choices",
+            "title": "Design choices",
+            "category": "details",
+            "summary": "The reasoning behind the app’s minimal, non-intrusive design.",
+            "md": "/help/design-choices.md",
+            "aliases": [
+                "philosophy"
+            ]
+        },
+        {
+            "slug": "troubleshooting",
+            "title": "Troubleshooting",
+            "category": "details",
+            "summary": "Common questions and what to check when something feels off.",
+            "md": "/help/troubleshooting.md",
+            "aliases": [
+                "problems"
+            ]
+        },
+        {
+            "slug": "final-note",
+            "title": "Final note",
+            "category": "details",
+            "summary": "A closing orientation for how to relate to the app and the practice.",
+            "md": "/help/final-note.md",
+            "aliases": []
+        }
+    ]
+}

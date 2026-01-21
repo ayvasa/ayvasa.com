@@ -1,10 +1,11 @@
-const CACHE_NAME = "ayvasa-cache-v5";
+const CACHE_NAME = "ayvasa-cache-v6";
 
 const ASSETS = [
   "/",
   "/index.html",
   "/practice.html",
   "/wiki.html",
+  "/help.html",
   "/styles.css?v=20260120",
   "/app.js?v=20260120",
   "/manifest.webmanifest",
@@ -13,7 +14,20 @@ const ASSETS = [
   "/wiki/search-index.json",
   "/wiki/original-intelligence.md",
   "/wiki/zero-field.md",
-  "/wiki/field-coherence.md"
+  "/wiki/field-coherence.md",
+  "/help/index.json",
+  "/help/search-index.json",
+  "/help/what-this-app-is.md",
+  "/help/starting-session.md",
+  "/help/completing-saving.md",
+  "/help/viewing-sessions.md",
+  "/help/your-data.md",
+  "/help/backing-up.md",
+  "/help/restoring-moving.md",
+  "/help/clearing-sessions.md",
+  "/help/design-choices.md",
+  "/help/troubleshooting.md",
+  "/help/final-note.md"
 ];
 
 const cacheResponse = async (request, response) => {

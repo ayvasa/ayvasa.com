@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "updated": "2026-01-21",
+  "generatedAt": "2026-01-21T09:19:09.363Z",
+  "entryCount": 11,
+  "entries": [
+    {
+      "slug": "what-this-app-is",
+      "title": "What this app is",
+      "category": "overview",
+      "summary": "What Ayvasa is, what it is not, and how to understand the app’s purpose.",
+      "aliases": [
+        "intro",
+        "about"
+      ],
+      "md": "/help/what-this-app-is.md",
+      "body": "Ayvasa is a local, nervous-system–first meditation practice space. There are no accounts. No cloud storage. No tracking. Your data lives only on this device, in this browser. This help page explains how to use the Practice screen and how to take care of your session data. See also Starting a session Completing and saving Viewing sessions"
+    },
+    {
+      "slug": "starting-session",
+      "title": "Starting a session",
+      "category": "practice",
+      "summary": "How to begin a session and what to expect once you start.",
+      "aliases": [
+        "begin"
+      ],
+      "md": "/help/starting-session.md",
+      "body": "To begin a session: Go to Practice Start a new session Stay with the practice until it naturally completes There is no visible timer during practice. This is intentional. Attention stays in the body, not on the clock. See also Completing and saving"
+    },
+    {
+      "slug": "completing-saving",
+      "title": "Completing and saving",
+      "category": "practice",
+      "summary": "How sessions end, how reflections work, and when data is saved.",
+      "aliases": [
+        "save",
+        "log"
+      ],
+      "md": "/help/completing-saving.md",
+      "body": "When the session ends, you’ll be guided through a short reflection. To save the session: Review the prompts Select responses that feel accurate Choose Save Session Very short sessions, under 1 minute, are not saved. This helps keep the data meaningful. If you leave the page or exit the browser before saving, the session is automatically discarded. See also Viewing sessions"
+    },
+    {
+      "slug": "viewing-sessions",
+      "title": "Viewing your sessions",
+      "category": "practice",
+      "summary": "How to review, edit, and manage your past sessions.",
+      "aliases": [
+        "history",
+        "stats"
+      ],
+      "md": "/help/viewing-sessions.md",
+      "body": "Saved sessions appear on the History tab. From there you can: Review past sessions Expand session details Add or edit context Log or edit carryover effects Delete individual sessions Nothing is shared. Nothing is ranked. There are no streaks, badges, or gamification. See also Your data"
+    },
+    {
+      "slug": "your-data",
+      "title": "Your data (important)",
+      "category": "data",
+      "summary": "How your data is stored, what stays local, and what to be aware of.",
+      "aliases": [
+        "privacy",
+        "storage"
+      ],
+      "md": "/help/your-data.md",
+      "body": "Where your data lives All session data is stored locally in your browser using on-device storage. This means: Your data belongs to you Ayvasa cannot see it Clearing browser data will remove it Using a different device or browser starts fresh See also Backing up your data"
+    },
+    {
+      "slug": "backing-up",
+      "title": "Backing up your sessions",
+      "category": "data",
+      "summary": "How to export your data and why regular backups matter.",
+      "aliases": [
+        "export",
+        "backup"
+      ],
+      "md": "/help/backing-up.md",
+      "body": "It is strongly recommended to back up your data periodically. To export your sessions: Go to Practice Select Export Data Save the downloaded file somewhere safe The ayvasa-sessions.json file contains all of your session data. See also Restoring or moving data"
+    },
+    {
+      "slug": "restoring-moving",
+      "title": "Restoring or moving data",
+      "category": "data",
+      "summary": "How to import session data on a new device or browser.",
+      "aliases": [
+        "import",
+        "restore"
+      ],
+      "md": "/help/restoring-moving.md",
+      "body": "You can import a previously exported data file. To import: Go to Practice Select Import Data Choose your saved file Imported sessions will appear alongside any existing sessions. This is useful when: Moving to a new device Switching browsers Restoring data after a reset See also Clearing sessions"
+    },
+    {
+      "slug": "clearing-sessions",
+      "title": "Clearing all sessions",
+      "category": "data",
+      "summary": "How to permanently remove all locally stored session data.",
+      "aliases": [
+        "delete",
+        "reset"
+      ],
+      "md": "/help/clearing-sessions.md",
+      "body": "You can permanently delete all locally stored session data. This action cannot be undone. Only do this if you are sure, and ideally after exporting a backup. To clear sessions: Go to Practice Go to History tab Select Clear All Data When prompted, click OK See also Backing up your data"
+    },
+    {
+      "slug": "design-choices",
+      "title": "Design choices",
+      "category": "details",
+      "summary": "The reasoning behind the app’s minimal, non-intrusive design.",
+      "aliases": [
+        "philosophy"
+      ],
+      "md": "/help/design-choices.md",
+      "body": "Ayvasa is designed by subtraction. No accounts: your practice doesn’t belong to us No cloud sync: presence over convenience No streaks: pressure distorts learning No social layer: comparison destabilizes regulation If the nervous system is the instrument, the app should not be playing it. See also What this app is Final note"
+    },
+    {
+      "slug": "troubleshooting",
+      "title": "Troubleshooting",
+      "category": "details",
+      "summary": "Common questions and what to check when something feels off.",
+      "aliases": [
+        "problems"
+      ],
+      "md": "/help/troubleshooting.md",
+      "body": "My sessions disappeared Local browser data may have been cleared. If possible, restore from a backup if one already exists. I switched devices and see no sessions Data does not sync automatically. It is recommended to use one dedicated device for Ayvasa. However, if you switched to a new device, you should export your data from the other device and import it on the new one. Something feels off This is not a performance or optimization app. Progress here is often subtle and non-linear. See also Your data Backing up your data Restoring or moving data"
+    },
+    {
+      "slug": "final-note",
+      "title": "Final note",
+      "category": "details",
+      "summary": "A closing orientation for how to relate to the app and the practice.",
+      "aliases": [],
+      "md": "/help/final-note.md",
+      "body": "This app is meant to get out of the way. If you find yourself managing, optimizing, or thinking about it during practice, something has shifted out of alignment. Return to the body. Let the app be quiet."
+    }
+  ]
+}
